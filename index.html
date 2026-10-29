@@ -7,182 +7,862 @@
   <meta name="description" content="Каталог продукции ИП Желтау">
   <link rel="manifest" href="./manifest.json">
   <title>Каталог ИП Желтау</title>
+
   <style>
-    :root{--green:#285c4d;--green2:#367963;--pale:#edf5f0;--yellow:#ffe36a;--ink:#23332d;--muted:#68776f;--line:#e1e9e4;--white:#fff}
-    *{box-sizing:border-box} body{margin:0;background:#f4f7f5;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-    header{background:var(--green);color:#fff;padding:18px max(16px,calc((100% - 1180px)/2));box-shadow:0 2px 8px #0001}
-    .brand{font-weight:800;font-size:23px;letter-spacing:.2px}.subtitle{margin-top:5px;color:#e0eee7;font-size:14px}
-    main{max-width:1180px;margin:0 auto;padding:18px 16px 40px}.toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;margin-bottom:14px}
-    input,select{font:inherit;border:1px solid #d5e0d9;border-radius:11px;background:#fff;padding:12px 13px;min-width:0;outline-color:var(--green2)}
-    .territory{display:flex;gap:8px;margin-bottom:13px;flex-wrap:wrap}.pill,.cat-btn{border:1px solid #cddbd2;border-radius:999px;background:#fff;padding:9px 14px;font:inherit;cursor:pointer;color:var(--green);font-weight:700}
-    .pill.active,.cat-btn.active{background:var(--green);border-color:var(--green);color:#fff}.category-list{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 17px}
-    .info{font-size:13px;color:var(--muted);margin:0 0 13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-    .card{display:grid;grid-template-columns:minmax(110px,34%) 1fr;gap:14px;padding:13px;background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:0 2px 8px #1c3b2c08;min-width:0}
-    .photo-wrap{min-height:150px;display:flex;align-items:center;justify-content:center;background:#f7f9f7;border-radius:10px;overflow:hidden}.photo{width:100%;height:100%;max-height:220px;object-fit:contain}.placeholder{color:#9aa9a0;font-size:12px;text-align:center;padding:12px}
-    .details{min-width:0;display:flex;flex-direction:column;gap:7px}.category{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--green2);font-weight:800}.name{font-size:17px;line-height:1.25;font-weight:800;overflow-wrap:anywhere}.brandline{font-size:13px;color:var(--muted)}.meta{font-size:12px;color:#53645b;line-height:1.45;overflow-wrap:anywhere}.prices{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:3px}.price-main{display:inline-block;background:var(--yellow);color:#262a1c;border-radius:7px;padding:8px 10px;font-size:18px;font-weight:800}.price-old{font-size:12px;color:#8a918d;text-decoration:line-through}.price-extra{font-size:12px;color:var(--muted);align-self:center}.desc{font-size:12px;color:#53645b;line-height:1.4;overflow-wrap:anywhere}.badge{display:inline-block;background:#e6f2eb;color:var(--green);border-radius:5px;padding:4px 7px;font-size:11px;font-weight:800;align-self:flex-start}
-    .empty,.loading,.error{background:#fff;border-radius:12px;padding:24px;text-align:center;color:var(--muted);grid-column:1/-1}.error{color:#8a342e}.foot{text-align:center;color:#87948d;font-size:12px;margin-top:22px}
-    @media(max-width:760px){.grid{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}.card{grid-template-columns:34% 1fr;gap:11px;padding:10px}.photo-wrap{min-height:130px}.name{font-size:15px}.price-main{font-size:17px}}
-    @media(max-width:380px){.card{grid-template-columns:1fr}.photo-wrap{height:180px}.photo{height:180px}}
+    :root {
+      --green: #285c4d;
+      --green2: #367963;
+      --pale: #edf5f0;
+      --yellow: #ffe36a;
+      --ink: #23332d;
+      --muted: #68776f;
+      --line: #e1e9e4;
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f7f5;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      background: var(--green);
+      color: #fff;
+      padding: 18px max(16px, calc((100% - 1180px) / 2));
+      box-shadow: 0 2px 8px #0001;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 23px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      color: #e0eee7;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    input, select {
+      font: inherit;
+      border: 1px solid #d5e0d9;
+      border-radius: 11px;
+      background: #fff;
+      padding: 12px 13px;
+      min-width: 0;
+      outline-color: var(--green2);
+    }
+
+    .territory {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 13px;
+      flex-wrap: wrap;
+    }
+
+    .pill, .cat-btn {
+      border: 1px solid #cddbd2;
+      border-radius: 999px;
+      background: #fff;
+      padding: 9px 14px;
+      font: inherit;
+      cursor: pointer;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .pill.active, .cat-btn.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .category-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 0 0 17px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 13px;
+    }
+
+    .info {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .refresh-btn {
+      flex-shrink: 0;
+      border: 1px solid var(--green);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--green);
+      padding: 9px 13px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .refresh-btn:hover {
+      background: var(--pale);
+    }
+
+    .refresh-btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: minmax(110px, 34%) 1fr;
+      gap: 14px;
+      padding: 13px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      box-shadow: 0 2px 8px #1c3b2c08;
+      min-width: 0;
+    }
+
+    .photo-wrap {
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f7f9f7;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .photo {
+      width: 100%;
+      height: 100%;
+      max-height: 220px;
+      object-fit: contain;
+    }
+
+    .placeholder {
+      color: #9aa9a0;
+      font-size: 12px;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .details {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .category {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      color: var(--green2);
+      font-weight: 800;
+    }
+
+    .name {
+      font-size: 17px;
+      line-height: 1.25;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .brandline {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #53645b;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .prices {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 3px;
+    }
+
+    .price-main {
+      display: inline-block;
+      background: var(--yellow);
+      color: #262a1c;
+      border-radius: 7px;
+      padding: 8px 10px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .price-old {
+      font-size: 12px;
+      color: #8a918d;
+      text-decoration: line-through;
+    }
+
+    .price-extra {
+      font-size: 12px;
+      color: var(--muted);
+      align-self: center;
+    }
+
+    .desc {
+      font-size: 12px;
+      color: #53645b;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e6f2eb;
+      color: var(--green);
+      border-radius: 5px;
+      padding: 4px 7px;
+      font-size: 11px;
+      font-weight: 800;
+      align-self: flex-start;
+    }
+
+    .empty, .loading, .error {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
+
+    .error {
+      color: #8a342e;
+    }
+
+    .foot {
+      text-align: center;
+      color: #87948d;
+      font-size: 12px;
+      margin-top: 22px;
+    }
+
+    @media(max-width: 760px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        grid-template-columns: 34% 1fr;
+        gap: 11px;
+        padding: 10px;
+      }
+
+      .photo-wrap {
+        min-height: 130px;
+      }
+
+      .name {
+        font-size: 15px;
+      }
+
+      .price-main {
+        font-size: 17px;
+      }
+    }
+
+    @media(max-width: 380px) {
+      .card {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-wrap {
+        height: 180px;
+      }
+
+      .photo {
+        height: 180px;
+      }
+    }
   </style>
 </head>
+
 <body>
-<header><div class="brand">ИП Желтау</div><div class="subtitle">Каталог продукции</div></header>
+<header>
+  <div class="brand">ИП Желтау</div>
+  <div class="subtitle">Каталог продукции</div>
+</header>
+
 <main>
-  <div class="territory" aria-label="Территория"><button class="pill active" data-territory="all">Все товары</button><button class="pill" data-territory="city">Город</button><button class="pill" data-territory="region">Регион</button></div>
-  <div class="toolbar"><input id="search" type="search" placeholder="Поиск по названию, бренду или штрихкоду…" aria-label="Поиск товаров"><select id="sort" aria-label="Сортировка"><option value="default">Сначала по порядку</option><option value="name">По названию А–Я</option><option value="price">Сначала дешевле</option></select></div>
-  <div id="categories" class="category-list" aria-label="Категории"><button class="cat-btn active" data-category="all">Все категории</button></div>
-  <p id="status" class="info">Загрузка каталога…</p>
-  <section id="products" class="grid"><div class="loading">Загружаем товары…</div></section>
-  <div class="foot">Каталог ИП Желтау · При подключении к интернету каталог обновляется автоматически</div>
+  <div class="territory" aria-label="Территория">
+    <button class="pill active" data-territory="all">Все товары</button>
+    <button class="pill" data-territory="city">Город</button>
+    <button class="pill" data-territory="region">Регион</button>
+  </div>
+
+  <div class="toolbar">
+    <input
+      id="search"
+      type="search"
+      placeholder="Поиск по названию, бренду или штрихкоду…"
+      aria-label="Поиск товаров"
+    >
+
+    <select id="sort" aria-label="Сортировка">
+      <option value="default">Сначала по порядку</option>
+      <option value="name">По названию А–Я</option>
+      <option value="price">Сначала дешевле</option>
+    </select>
+  </div>
+
+  <div id="categories" class="category-list" aria-label="Категории">
+    <button class="cat-btn active" data-category="all">
+      Все категории
+    </button>
+  </div>
+
+  <div class="status-row">
+    <p id="status" class="info" aria-live="polite">
+      Загрузка каталога…
+    </p>
+
+    <button id="refreshBtn" class="refresh-btn" type="button">
+      Обновить
+    </button>
+  </div>
+
+  <section id="products" class="grid">
+    <div class="loading">Загружаем товары…</div>
+  </section>
+
+  <div class="foot">
+    Каталог ИП Желтау · Данные сохраняются для работы без интернета
+  </div>
 </main>
+
 <script>
 (() => {
   'use strict';
-  const API_URL = 'https://script.google.com/macros/s/AKfycbwtA8LXvNdYI8C0DHE9SQQjc03_pl5Y2k53gqhHwVEpUZuKe19Mz5yq2xruY4kdUZY/exec';
+
+  const API_URL =
+    'https://script.google.com/macros/s/AKfycbwtA8LXvNdYI8C0DHE9SQQjc03_pl5Y2k53gqhHwVEpUZuKe19Mz5yq2xruY4kdUZY/exec';
+
   const DATA_KEY = 'zheltau-products-v1';
+  const HOUR = 60 * 60 * 1000;
+
   const $ = id => document.getElementById(id);
-  let allProducts = [], activeCategory = 'all', activeTerritory = 'all';
+
+  let allProducts = [];
+  let activeCategory = 'all';
+  let activeTerritory = 'all';
+  let refreshing = false;
+  let lastCheckAt = 0;
 
   const norm = value => String(value ?? '').trim();
+
   const get = (p, ...keys) => {
     for (const key of keys) {
       const wanted = String(key).trim().toLowerCase();
-      const foundKey = Object.keys(p || {}).find(k => String(k).trim().toLowerCase() === wanted);
-      if (foundKey !== undefined && norm(p[foundKey])) return norm(p[foundKey]);
+
+      const foundKey = Object.keys(p || {}).find(
+        k => String(k).trim().toLowerCase() === wanted
+      );
+
+      if (foundKey !== undefined && norm(p[foundKey])) {
+        return norm(p[foundKey]);
+      }
     }
+
     return '';
   };
-  const yes = value => ['да','yes','true','1','город','регион'].includes(norm(value).toLocaleLowerCase('ru'));
-  const isActive = p => norm(get(p,'Статус','status')).toLocaleLowerCase('ru') === 'активен'
-    || norm(get(p,'Статус','status')).toLocaleLowerCase('ru') === 'новинка';
-  const isNew = p => norm(get(p,'Статус','status')).toLocaleLowerCase('ru') === 'новинка';
-  const escapeHTML = value => norm(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const money = value => { const s = norm(value); if (!s) return ''; const n = Number(s.replace(/\s/g,'').replace(',','.').replace(/[^\d.-]/g,'')); return Number.isFinite(n) && n !== 0 ? new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n) + ' ₸' : s; };
+
+  const yes = value =>
+    ['да', 'yes', 'true', '1', 'город', 'регион']
+      .includes(norm(value).toLocaleLowerCase('ru'));
+
+  const isActive = p => {
+    const status = norm(get(p, 'Статус', 'status'))
+      .toLocaleLowerCase('ru');
+
+    return status === 'активен' || status === 'новинка';
+  };
+
+  const isNew = p =>
+    norm(get(p, 'Статус', 'status'))
+      .toLocaleLowerCase('ru') === 'новинка';
+
+  const escapeHTML = value =>
+    norm(value).replace(/[&<>"']/g, c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[c]));
+
+  const money = value => {
+    const s = norm(value);
+    if (!s) return '';
+
+    const n = Number(
+      s.replace(/\s/g, '')
+        .replace(',', '.')
+        .replace(/[^\d.-]/g, '')
+    );
+
+    return Number.isFinite(n) && n !== 0
+      ? new Intl.NumberFormat('ru-RU', {
+          maximumFractionDigits: 2
+        }).format(n) + ' ₸'
+      : s;
+  };
+
+  function formatDateTime(timestamp) {
+    if (!timestamp) return 'нет данных';
+
+    return new Date(timestamp).toLocaleString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  function updateStatus(message) {
+    $('status').textContent = message;
+  }
+
+  function activeCount() {
+    return allProducts.filter(isActive).length;
+  }
+
+  function showSavedStatus(prefix = 'Сохранённая версия') {
+    const saved = readCache();
+
+    if (!saved) {
+      updateStatus(prefix);
+      return;
+    }
+
+    updateStatus(
+      `${prefix} · ${activeCount()} активных товаров · последнее обновление: ${formatDateTime(saved.savedAt)}`
+    );
+  }
 
   function loadJSONP() {
     return new Promise((resolve, reject) => {
       const cb = 'zheltauCallback_' + Date.now();
       const script = document.createElement('script');
-      const timer = setTimeout(() => finish(new Error('Истекло время ожидания ответа каталога')), 15000);
-      function finish(err, data) { clearTimeout(timer); delete window[cb]; script.remove(); err ? reject(err) : resolve(data); }
+
+      const timer = setTimeout(() => {
+        finish(new Error('Истекло время ожидания ответа каталога'));
+      }, 15000);
+
+      function finish(err, data) {
+        clearTimeout(timer);
+        delete window[cb];
+        script.remove();
+
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      }
+
       window[cb] = data => finish(null, data);
-      script.onerror = () => finish(new Error('Не удалось подключиться к каталогу'));
+
+      script.onerror = () => {
+        finish(new Error('Не удалось подключиться к каталогу'));
+      };
+
       script.src = API_URL + '?callback=' + cb + '&_=' + Date.now();
+
       document.head.appendChild(script);
     });
   }
-  function cacheProducts(products) { try { localStorage.setItem(DATA_KEY, JSON.stringify({savedAt:Date.now(), products})); } catch(e) {} }
-  function readCache() { try { const saved = JSON.parse(localStorage.getItem(DATA_KEY) || 'null'); return saved && Array.isArray(saved.products) ? saved : null; } catch(e) { return null; } }
 
-  async function refreshData() {
+  function cacheProducts(products) {
+    try {
+      localStorage.setItem(
+        DATA_KEY,
+        JSON.stringify({
+          savedAt: Date.now(),
+          products
+        })
+      );
+    } catch (e) {
+      console.warn('Не удалось сохранить товары на устройстве', e);
+    }
+  }
+
+  function readCache() {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem(DATA_KEY) || 'null'
+      );
+
+      return saved && Array.isArray(saved.products)
+        ? saved
+        : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function refreshData(manual = false) {
+    if (refreshing) return;
+
+    if (!navigator.onLine) {
+      showSavedStatus('Нет интернета. Используются сохранённые данные');
+      return;
+    }
+
+    refreshing = true;
+    $('refreshBtn').disabled = true;
+    $('refreshBtn').textContent = 'Обновление…';
+
     const cached = readCache();
-   if (cached) {
-  allProducts = cached.products.filter(p => {
-    const status = get(p, 'Статус', 'status').toLocaleLowerCase('ru').trim();
-    return status === 'активен' || status === 'новинка';
-  });
-  render();
-  $('status').textContent = 'Сохранённая версия каталога · проверяем обновления…';
-}
+
+    if (cached) {
+      allProducts = cached.products.filter(isActive);
+      render();
+
+      showSavedStatus('Проверяем обновления');
+    } else {
+      updateStatus('Загрузка каталога…');
+    }
+
     try {
       const data = await loadJSONP();
-      if (!Array.isArray(data)) throw new Error('Получен неверный формат данных');
-      allProducts = data.filter(p => {
-  if (!p || !Object.values(p).some(v => norm(v))) return false;
 
-  const status = get(p, 'Статус', 'status')
-    .toLocaleLowerCase('ru')
-    .trim();
-
-  return status === 'активен' || status === 'новинка';
-});
-      cacheProducts(allProducts);
-      render();
-      const visibleCount = allProducts.filter(isActive).length;
-      $('status').textContent = `Активных товаров: ${visibleCount} · обновлено ${new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'})}`;
-    } catch(err) {
-      if (cached) $('status').textContent = `Офлайн-режим: показана сохранённая версия (${allProducts.filter(isActive).length} активных товаров). Подключитесь к интернету для обновления.`;
-      else {
-        $('status').textContent = 'Не удалось загрузить каталог. Проверьте подключение к интернету и обновите страницу.';
-        $('products').innerHTML = '<div class="error">Каталог пока не загружен. При первом открытии необходимо подключение к интернету.</div>';
+      if (!Array.isArray(data)) {
+        throw new Error('Получен неверный формат данных');
       }
+
+      const products = data.filter(p => {
+        if (!p || !Object.values(p).some(v => norm(v))) {
+          return false;
+        }
+
+        const status = get(p, 'Статус', 'status')
+          .toLocaleLowerCase('ru')
+          .trim();
+
+        return status === 'активен' || status === 'новинка';
+      });
+
+      allProducts = products;
+      cacheProducts(allProducts);
+      lastCheckAt = Date.now();
+
+      render();
+
+      const saved = readCache();
+
+      updateStatus(
+        `Активных товаров: ${activeCount()} · обновлено: ${formatDateTime(saved?.savedAt)}`
+      );
+
+    } catch (err) {
+      console.warn('Не удалось обновить каталог:', err);
+
+      if (cached) {
+        showSavedStatus(
+          'Не удалось обновить. Используются сохранённые данные'
+        );
+      } else {
+        updateStatus(
+          'Не удалось загрузить каталог. Проверьте интернет и повторите попытку.'
+        );
+
+        $('products').innerHTML =
+          '<div class="error">Каталог пока не загружен. При первом открытии необходимо подключение к интернету.</div>';
+      }
+    } finally {
+      refreshing = false;
+      $('refreshBtn').disabled = false;
+      $('refreshBtn').textContent = 'Обновить';
     }
   }
 
   function imageURL(raw) {
-  const url = norm(raw);
-  if (!url) return '';
+    const url = norm(raw);
 
-  const idMatch = url.match(
-    /(?:\/d\/|[?&]id=)([a-zA-Z0-9_-]{15,})/
-  );
+    if (!url) return '';
 
-  if (/drive\.google\.com/.test(url) && idMatch) {
-    return 'https://drive.google.com/thumbnail?id='
-      + idMatch[1] + '&sz=w800';
+    const idMatch = url.match(
+      /(?:\/d\/|[?&]id=)([a-zA-Z0-9_-]{15,})/
+    );
+
+    if (/drive\.google\.com/.test(url) && idMatch) {
+      return 'https://drive.google.com/thumbnail?id='
+        + idMatch[1] + '&sz=w800';
+    }
+
+    return url;
   }
 
-  return url;
-}
   function renderCategories(products) {
-    const categories = [...new Set(products.filter(isActive).map(p => get(p,'Категория','category')).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'));
+    const categories = [
+      ...new Set(
+        products
+          .filter(isActive)
+          .map(p => get(p, 'Категория', 'category'))
+          .filter(Boolean)
+      )
+    ].sort((a, b) => a.localeCompare(b, 'ru'));
+
     const host = $('categories');
     const previousCategory = activeCategory;
+
     host.innerHTML = '';
+
     const addButton = (label, value) => {
       const b = document.createElement('button');
-      b.className = 'cat-btn' + (activeCategory === value ? ' active' : '');
-      b.textContent = label; b.dataset.category = value;
-      b.addEventListener('click',()=>{activeCategory=value; render();});
+
+      b.className =
+        'cat-btn' + (activeCategory === value ? ' active' : '');
+
+      b.textContent = label;
+      b.dataset.category = value;
+
+      b.addEventListener('click', () => {
+        activeCategory = value;
+        render();
+      });
+
       host.appendChild(b);
     };
-    addButton('Все категории','all');
-    categories.forEach(c=>addButton(c,c));
-    if (previousCategory !== 'all' && !categories.includes(previousCategory)) activeCategory = 'all';
-    [...host.querySelectorAll('[data-category]')].forEach(b => b.classList.toggle('active', b.dataset.category === activeCategory));
+
+    addButton('Все категории', 'all');
+    categories.forEach(c => addButton(c, c));
+
+    if (
+      previousCategory !== 'all' &&
+      !categories.includes(previousCategory)
+    ) {
+      activeCategory = 'all';
+    }
+
+    [
+      ...host.querySelectorAll('[data-category]')
+    ].forEach(b => {
+      b.classList.toggle(
+        'active',
+        b.dataset.category === activeCategory
+      );
+    });
   }
+
   function cardHTML(p) {
-    const name = get(p,'Наименование','Название','name') || 'Без названия';
-    const brand = get(p,'Бренд','brand');
-    const category = get(p,'Категория','category');
-    const packaging = get(p,'Фасовка','Упаковка','packaging');
-    const barcode = get(p,'Штрихкод','barcode');
-    const quantity = get(p,'В коробе','Количество в коробе','quantity per box');
-    const price = get(p,'Цена','price');
-    const oldPrice = get(p,'Старая цена','Цена старая','old price');
-    const boxPrice = get(p,'Цена за коробку','Цена коробки','box price');
-    const kgPrice = get(p,'Цена за кг','Цена за килограмм','kg price');
-    const desc = get(p,'Описание','description');
-    const img = imageURL(get(p,'Фото','Изображение','photo','image'));
-    return `<article class="card"><div class="photo-wrap">${img ? `<img class="photo" src="${escapeHTML(img)}" alt="${escapeHTML(name)}" loading="lazy" onerror="this.remove();this.parentElement.innerHTML='<div class=\'placeholder\'>Фото пока не добавлено</div>'">` : '<div class="placeholder">Фото пока не добавлено</div>'}</div><div class="details">${category?`<div class="category">${escapeHTML(category)}</div>`:''}<div class="name">${escapeHTML(name)}</div>${brand?`<div class="brandline">${escapeHTML(brand)}</div>`:''}${isNew(p)?'<span class="badge">НОВИНКА</span>':''}${packaging?`<div class="meta">Фасовка: ${escapeHTML(packaging)}</div>`:''}${barcode?`<div class="meta">Штрихкод: ${escapeHTML(barcode)}</div>`:''}${quantity?`<div class="meta">В коробе: ${escapeHTML(quantity)} шт.</div>`:''}${desc?`<div class="desc">${escapeHTML(desc)}</div>`:''}<div class="prices">${oldPrice?`<span class="price-old">${escapeHTML(money(oldPrice))}</span>`:''}${price?`<span class="price-main">${escapeHTML(money(price))}</span>`:''}${boxPrice?`<span class="price-extra">Короб: ${escapeHTML(money(boxPrice))}</span>`:''}${kgPrice?`<span class="price-extra">За кг: ${escapeHTML(money(kgPrice))}</span>`:''}</div></div></article>`;
+    const name =
+      get(p, 'Наименование', 'Название', 'name') || 'Без названия';
+
+    const brand = get(p, 'Бренд', 'brand');
+    const category = get(p, 'Категория', 'category');
+    const packaging = get(p, 'Фасовка', 'Упаковка', 'packaging');
+    const barcode = get(p, 'Штрихкод', 'barcode');
+    const quantity = get(p, 'В коробе', 'Количество в коробе', 'quantity per box');
+    const price = get(p, 'Цена', 'price');
+    const oldPrice = get(p, 'Старая цена', 'Цена старая', 'old price');
+    const boxPrice = get(p, 'Цена за коробку', 'Цена коробки', 'box price');
+    const kgPrice = get(p, 'Цена за кг', 'Цена за килограмм', 'kg price');
+    const desc = get(p, 'Описание', 'description');
+    const img = imageURL(get(p, 'Фото', 'Изображение', 'photo', 'image'));
+
+    const photoHTML = img
+      ? `<img class="photo" src="${escapeHTML(img)}" alt="${escapeHTML(name)}" loading="lazy" onerror="this.remove();this.parentElement.innerHTML='<div class=\\'placeholder\\'>Фото пока не добавлено</div>'">`
+      : '<div class="placeholder">Фото пока не добавлено</div>';
+
+    return `
+      <article class="card">
+        <div class="photo-wrap">${photoHTML}</div>
+        <div class="details">
+          ${category ? `<div class="category">${escapeHTML(category)}</div>` : ''}
+          <div class="name">${escapeHTML(name)}</div>
+          ${brand ? `<div class="brandline">${escapeHTML(brand)}</div>` : ''}
+          ${isNew(p) ? '<span class="badge">НОВИНКА</span>' : ''}
+          ${packaging ? `<div class="meta">Фасовка: ${escapeHTML(packaging)}</div>` : ''}
+          ${barcode ? `<div class="meta">Штрихкод: ${escapeHTML(barcode)}</div>` : ''}
+          ${quantity ? `<div class="meta">В коробе: ${escapeHTML(quantity)} шт.</div>` : ''}
+          ${desc ? `<div class="desc">${escapeHTML(desc)}</div>` : ''}
+          <div class="prices">
+            ${oldPrice ? `<span class="price-old">${escapeHTML(money(oldPrice))}</span>` : ''}
+            ${price ? `<span class="price-main">${escapeHTML(money(price))}</span>` : ''}
+            ${boxPrice ? `<span class="price-extra">Короб: ${escapeHTML(money(boxPrice))}</span>` : ''}
+            ${kgPrice ? `<span class="price-extra">За кг: ${escapeHTML(money(kgPrice))}</span>` : ''}
+          </div>
+        </div>
+      </article>
+    `;
   }
+
   function render() {
     const activeProducts = allProducts.filter(isActive);
+
     renderCategories(activeProducts);
+
     const q = $('search').value.trim().toLocaleLowerCase('ru');
+
     let list = activeProducts.filter(p => {
-      const text = [get(p,'Наименование','Название'),get(p,'Бренд'),get(p,'Штрихкод'),get(p,'Код'),get(p,'Описание')].join(' ').toLocaleLowerCase('ru');
-      const cat = get(p,'Категория');
-      const city = get(p,'Город');
-      const region = get(p,'Регион');
-      const territoryOK = activeTerritory === 'all'
-        || (activeTerritory === 'city' && yes(city))
-        || (activeTerritory === 'region' && yes(region));
-      return (!q || text.includes(q)) && (activeCategory==='all' || cat===activeCategory) && territoryOK;
+      const text = [
+        get(p, 'Наименование', 'Название'),
+        get(p, 'Бренд'),
+        get(p, 'Штрихкод'),
+        get(p, 'Код'),
+        get(p, 'Описание')
+      ].join(' ').toLocaleLowerCase('ru');
+
+      const cat = get(p, 'Категория');
+      const city = get(p, 'Город');
+      const region = get(p, 'Регион');
+
+      const territoryOK =
+        activeTerritory === 'all' ||
+        (activeTerritory === 'city' && yes(city)) ||
+        (activeTerritory === 'region' && yes(region));
+
+      return (!q || text.includes(q)) &&
+        (activeCategory === 'all' || cat === activeCategory) &&
+        territoryOK;
     });
+
     const sort = $('sort').value;
-    if(sort==='name') list.sort((a,b)=>get(a,'Наименование').localeCompare(get(b,'Наименование'),'ru'));
-    if(sort==='price') list.sort((a,b)=>{const n=x=>Number(get(x,'Цена').replace(/\s/g,'').replace(',','.').replace(/[^\d.-]/g,''))||Infinity;return n(a)-n(b)});
-    $('products').innerHTML = list.length ? list.map(cardHTML).join('') : '<div class="empty">По выбранным условиям товары не найдены.</div>';
+
+    if (sort === 'name') {
+      list.sort((a, b) =>
+        get(a, 'Наименование')
+          .localeCompare(get(b, 'Наименование'), 'ru')
+      );
+    }
+
+    if (sort === 'price') {
+      list.sort((a, b) => {
+        const n = x =>
+          Number(
+            get(x, 'Цена')
+              .replace(/\s/g, '')
+              .replace(',', '.')
+              .replace(/[^\d.-]/g, '')
+          ) || Infinity;
+
+        return n(a) - n(b);
+      });
+    }
+
+    $('products').innerHTML = list.length
+      ? list.map(cardHTML).join('')
+      : '<div class="empty">По выбранным условиям товары не найдены.</div>';
   }
-  $('search').addEventListener('input',render);
-  $('sort').addEventListener('change',render);
-  document.querySelectorAll('[data-territory]').forEach(b=>b.addEventListener('click',()=>{
-    activeTerritory=b.dataset.territory;
-    document.querySelectorAll('[data-territory]').forEach(x=>x.classList.toggle('active',x===b));
+
+  $('search').addEventListener('input', render);
+  $('sort').addEventListener('change', render);
+
+  document.querySelectorAll('[data-territory]').forEach(b => {
+    b.addEventListener('click', () => {
+      activeTerritory = b.dataset.territory;
+
+      document.querySelectorAll('[data-territory]').forEach(x => {
+        x.classList.toggle('active', x === b);
+      });
+
+      render();
+    });
+  });
+
+  $('refreshBtn').addEventListener('click', () => {
+    refreshData(true);
+  });
+
+  // Проверка раз в час, пока страница открыта.
+  setInterval(() => {
+    refreshData();
+  }, HOUR);
+
+  // При возвращении на страницу проверяем,
+  // не прошло ли с последней проверки больше часа.
+  document.addEventListener('visibilitychange', () => {
+    if (
+      document.visibilityState === 'visible' &&
+      Date.now() - lastCheckAt >= HOUR
+    ) {
+      refreshData();
+    }
+  });
+
+  // Отслеживаем восстановление подключения.
+  window.addEventListener('online', () => {
+    if (Date.now() - lastCheckAt >= HOUR) {
+      refreshData();
+    }
+  });
+
+  if (
+    'serviceWorker' in navigator &&
+    location.protocol.startsWith('http')
+  ) {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .catch(() => {});
+  }
+
+  // Показываем сохранённые данные сразу,
+  // затем пробуем загрузить актуальные.
+  const cached = readCache();
+
+  if (cached) {
+    allProducts = cached.products.filter(isActive);
     render();
-  }));
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+    showSavedStatus('Сохранённая версия');
+    lastCheckAt = cached.savedAt || 0;
+  }
+
   refreshData();
 })();
 </script>
