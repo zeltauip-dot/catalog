@@ -1,4 +1,3 @@
-```javascript
 const CACHE_NAME = 'zheltau-shell-v2';
 const IMAGE_CACHE_NAME = 'zheltau-images-v1';
 
