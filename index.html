@@ -84,7 +84,15 @@
     try {
       const data = await loadJSONP();
       if (!Array.isArray(data)) throw new Error('Получен неверный формат данных');
-      allProducts = data.filter(p => p && Object.values(p).some(v => norm(v)));
+      allProducts = data.filter(p => {
+  if (!p || !Object.values(p).some(v => norm(v))) return false;
+
+  const status = get(p, 'Статус', 'status')
+    .toLocaleLowerCase('ru')
+    .trim();
+
+  return status === 'активен' || status === 'новинка';
+});
       cacheProducts(allProducts);
       render();
       const visibleCount = allProducts.filter(isActive).length;
