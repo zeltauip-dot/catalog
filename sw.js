@@ -1,5 +1,5 @@
-const CACHE_NAME = 'zheltau-shell-v2';
-const IMAGE_CACHE_NAME = 'zheltau-images-v1';
+const CACHE_NAME = 'zheltau-shell-v3';
+const IMAGE_CACHE_NAME = 'zheltau-images-v2';
 
 const APP_FILES = [
   './',
@@ -45,7 +45,8 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Кешируем фотографии Google Диска.
+  // Кешируем фотографии Google Диска,
+  // включая непрозрачные ответы.
   if (
     req.destination === 'image' &&
     url.hostname === 'drive.google.com'
@@ -54,13 +55,22 @@ self.addEventListener('fetch', event => {
       caches.open(IMAGE_CACHE_NAME).then(async cache => {
         const cached = await cache.match(req);
 
-        if (cached) return cached;
+        if (cached) {
+          return cached;
+        }
 
         try {
           const response = await fetch(req);
 
-          if (response.ok) {
-            await cache.put(req, response.clone());
+          if (response.ok || response.type === 'opaque') {
+            try {
+              await cache.put(req, response.clone());
+            } catch (cacheError) {
+              console.warn(
+                'Не удалось сохранить фото в кеш:',
+                cacheError
+              );
+            }
           }
 
           return response;
@@ -76,23 +86,32 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Обычное кеширование файлов приложения.
+  // Кешируем файлы приложения.
   if (url.origin === self.location.origin) {
     event.respondWith(
-      caches.match(req).then(cached =>
-        cached || fetch(req).then(response => {
+      caches.match(req).then(async cached => {
+        if (cached) {
+          return cached;
+        }
+
+        try {
+          const response = await fetch(req);
+
           if (response.ok) {
             const copy = response.clone();
 
             caches.open(CACHE_NAME)
-              .then(cache => cache.put(req, copy));
+              .then(cache => cache.put(req, copy))
+              .catch(error => {
+                console.warn('Ошибка кеширования:', error);
+              });
           }
 
           return response;
-        }).catch(() => caches.match('./index.html'))
-      )
+        } catch (error) {
+          return caches.match('./index.html');
+        }
+      })
     );
   }
 });
-```
-
