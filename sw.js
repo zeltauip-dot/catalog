@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zheltau-shell-v3';
+const CACHE_NAME = 'zheltau-shell-v4';
 const IMAGE_CACHE_NAME = 'zheltau-images-v2';
 
 const APP_FILES = [
@@ -37,7 +37,7 @@ self.addEventListener('fetch', event => {
 
   const url = new URL(req.url);
 
-  // Не кешируем ответы API каталога.
+  // Не перехватываем запросы к Google Apps Script.
   if (
     url.hostname === 'script.google.com' ||
     url.hostname === 'script.googleusercontent.com'
@@ -45,8 +45,9 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Кешируем фотографии Google Диска,
-  // включая непрозрачные ответы.
+  // Фотографии Google Диска:
+  // сначала используем сохранённое фото,
+  // а при его отсутствии загружаем из интернета.
   if (
     req.destination === 'image' &&
     url.hostname === 'drive.google.com'
@@ -55,9 +56,7 @@ self.addEventListener('fetch', event => {
       caches.open(IMAGE_CACHE_NAME).then(async cache => {
         const cached = await cache.match(req);
 
-        if (cached) {
-          return cached;
-        }
+        if (cached) return cached;
 
         try {
           const response = await fetch(req);
@@ -65,11 +64,8 @@ self.addEventListener('fetch', event => {
           if (response.ok || response.type === 'opaque') {
             try {
               await cache.put(req, response.clone());
-            } catch (cacheError) {
-              console.warn(
-                'Не удалось сохранить фото в кеш:',
-                cacheError
-              );
+            } catch (error) {
+              console.warn('Не удалось сохранить фото:', error);
             }
           }
 
@@ -86,30 +82,64 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Кешируем файлы приложения.
+  // Для открытия приложения сначала обращаемся к сети.
+  // Если интернета нет, используем сохранённую страницу.
   if (url.origin === self.location.origin) {
+    const isPage =
+      req.mode === 'navigate' ||
+      url.pathname.endsWith('/index.html') ||
+      url.pathname.endsWith('/');
+
+    if (isPage) {
+      event.respondWith(
+        (async () => {
+          try {
+            const response = await fetch(req);
+
+            if (response.ok) {
+              const cache = await caches.open(CACHE_NAME);
+
+              await cache.put(req, response.clone());
+            }
+
+            return response;
+          } catch (error) {
+            return (
+              await caches.match(req) ||
+              await caches.match('./index.html') ||
+              new Response(
+                'Каталог недоступен. Откройте его с интернетом хотя бы один раз.',
+                {
+                  status: 503,
+                  headers: {
+                    'Content-Type': 'text/plain; charset=utf-8'
+                  }
+                }
+              )
+            );
+          }
+        })()
+      );
+
+      return;
+    }
+
+    // Остальные файлы приложения кешируем обычным способом.
     event.respondWith(
       caches.match(req).then(async cached => {
-        if (cached) {
-          return cached;
-        }
+        if (cached) return cached;
 
         try {
           const response = await fetch(req);
 
           if (response.ok) {
-            const copy = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => cache.put(req, copy))
-              .catch(error => {
-                console.warn('Ошибка кеширования:', error);
-              });
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(req, response.clone());
           }
 
           return response;
         } catch (error) {
-          return caches.match('./index.html');
+          return new Response('', { status: 503 });
         }
       })
     );
