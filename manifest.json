@@ -1,0 +1,12 @@
+{
+  "name": "Каталог ИП Желтау",
+  "short_name": "Желтау",
+  "description": "Каталог продукции ИП Желтау",
+  "lang": "ru",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7f5",
+  "theme_color": "#285c4d",
+  "icons": []
+}
