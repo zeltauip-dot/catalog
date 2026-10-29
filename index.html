@@ -110,11 +110,20 @@
   }
 
   function imageURL(raw) {
-    const url = norm(raw); if (!url) return '';
-    const idMatch = url.match(/(?:\/d\/|[?&]id=)([a-zA-Z0-9_-]{15,})/);
-    if (/drive\.google\.com/.test(url) && idMatch) return 'https://drive.google.com/uc?export=view&id=' + idMatch[1];
-    return url;
+  const url = norm(raw);
+  if (!url) return '';
+
+  const idMatch = url.match(
+    /(?:\/d\/|[?&]id=)([a-zA-Z0-9_-]{15,})/
+  );
+
+  if (/drive\.google\.com/.test(url) && idMatch) {
+    return 'https://drive.google.com/thumbnail?id='
+      + idMatch[1] + '&sz=w800';
   }
+
+  return url;
+}
   function renderCategories(products) {
     const categories = [...new Set(products.filter(isActive).map(p => get(p,'Категория','category')).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'));
     const host = $('categories');
