@@ -286,14 +286,9 @@
       font-size: 12px;
       margin-top: 22px;
     }
-/* Отображение каталога на планшетах */
-    @media (min-width: 761px) and (max-width: 1100px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    @media(max-width: 760px) {
+
+    /* Телефоны */
+    @media (max-width: 760px) {
       .grid {
         grid-template-columns: 1fr;
       }
@@ -323,37 +318,56 @@
 
     /* Планшет в книжной ориентации */
     @media (min-width: 600px) and (max-width: 1100px) and (orientation: portrait) {
+      main {
+        padding: 22px 26px 44px;
+      }
+
       .grid {
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 22px;
       }
 
       .card {
-        grid-template-columns: 38% 1fr;
-        gap: 18px;
-        padding: 18px;
+        grid-template-columns: 42% 1fr;
+        gap: 22px;
+        padding: 22px;
+        border-radius: 18px;
       }
 
       .photo-wrap {
-        min-height: 220px;
+        min-height: 280px;
+      }
+
+      .photo {
+        max-height: 340px;
+      }
+
+      .details {
+        gap: 11px;
       }
 
       .name {
-        font-size: 21px;
+        font-size: 24px;
         line-height: 1.4;
       }
 
       .price-main {
-        font-size: 25px;
+        font-size: 29px;
+        padding: 12px 15px;
       }
 
       .meta, .brandline, .desc {
-        font-size: 15px;
+        font-size: 17px;
         line-height: 1.5;
       }
 
       .category {
-        font-size: 13px;
+        font-size: 14px;
+      }
+
+      .badge {
+        font-size: 14px;
+        padding: 6px 9px;
       }
     }
 
@@ -377,8 +391,8 @@
       }
     }
 
-    /* Маленькие телефоны */
-    @media(max-width: 380px) {
+    /* Очень узкие экраны */
+    @media (max-width: 380px) {
       .card {
         grid-template-columns: 1fr;
       }
@@ -391,7 +405,6 @@
         height: 180px;
       }
     }
-
   </style>
 </head>
 
