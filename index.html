@@ -292,6 +292,7 @@
         grid-template-columns: 1fr;
       }
     }
+    
     @media(max-width: 760px) {
       .grid {
         grid-template-columns: 1fr;
@@ -320,6 +321,63 @@
       }
     }
 
+    /* Планшет в книжной ориентации */
+    @media (min-width: 600px) and (max-width: 1100px) and (orientation: portrait) {
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .card {
+        grid-template-columns: 38% 1fr;
+        gap: 18px;
+        padding: 18px;
+      }
+
+      .photo-wrap {
+        min-height: 220px;
+      }
+
+      .name {
+        font-size: 21px;
+        line-height: 1.4;
+      }
+
+      .price-main {
+        font-size: 25px;
+      }
+
+      .meta, .brandline, .desc {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .category {
+        font-size: 13px;
+      }
+    }
+
+    /* Планшет в альбомной ориентации */
+    @media (min-width: 761px) and (max-width: 1100px) and (orientation: landscape) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        grid-template-columns: 34% 1fr;
+        padding: 12px;
+      }
+
+      .name {
+        font-size: 17px;
+      }
+
+      .price-main {
+        font-size: 20px;
+      }
+    }
+
+    /* Маленькие телефоны */
     @media(max-width: 380px) {
       .card {
         grid-template-columns: 1fr;
@@ -333,6 +391,7 @@
         height: 180px;
       }
     }
+
   </style>
 </head>
 
