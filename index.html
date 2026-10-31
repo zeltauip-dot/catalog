@@ -1119,27 +1119,64 @@
     viewerHTML(visibleProducts[viewerIndex]);
   }
 
-  // Открываем товар отдельным обработчиком касания — это надёжнее
-  // на планшетах, где браузер иногда не передаёт обычный click.
+  // Совместимость со старыми Android-браузерами:
+  // используем touchstart/touchend и не полагаемся на closest() или Pointer Events.
   let lastTouchOpenAt = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchStartAt = 0;
+  let touchCardIndex = -1;
 
-  function openCardFromEvent(e) {
-    const card = e.target.closest('[data-product-index]');
-    if (!card || !$('products').contains(card)) return false;
-    openViewer(Number(card.dataset.productIndex));
-    return true;
+  function findProductCard(target) {
+    const host = $('products');
+    while (target && target !== host) {
+      if (target.getAttribute && target.getAttribute('data-product-index') !== null) {
+        return target;
+      }
+      target = target.parentNode;
+    }
+    return null;
   }
 
-  $('products').addEventListener('pointerup', e => {
-    if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
-    if (openCardFromEvent(e)) lastTouchOpenAt = Date.now();
-  });
+  $('products').addEventListener('touchstart', function(e) {
+    const card = findProductCard(e.target);
+    if (!card || !e.touches || !e.touches.length) {
+      touchCardIndex = -1;
+      return;
+    }
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartAt = Date.now();
+    touchCardIndex = parseInt(card.getAttribute('data-product-index'), 10);
+  }, false);
 
-  $('products').addEventListener('click', e => {
-    // Не открываем второй раз после pointerup на сенсорном экране.
-    if (Date.now() - lastTouchOpenAt < 700) return;
-    openCardFromEvent(e);
-  });
+  $('products').addEventListener('touchend', function(e) {
+    if (touchCardIndex < 0 || !e.changedTouches || !e.changedTouches.length) return;
+    const touch = e.changedTouches[0];
+    const dx = Math.abs(touch.clientX - touchStartX);
+    const dy = Math.abs(touch.clientY - touchStartY);
+    const elapsed = Date.now() - touchStartAt;
+    const index = touchCardIndex;
+    touchCardIndex = -1;
+
+    // Не открываем карточку, если пользователь прокручивал список.
+    if (dx > 18 || dy > 18 || elapsed > 1200 || isNaN(index)) return;
+    lastTouchOpenAt = Date.now();
+    openViewer(index);
+  }, false);
+
+  $('products').addEventListener('touchcancel', function() {
+    touchCardIndex = -1;
+  }, false);
+
+  $('products').addEventListener('click', function(e) {
+    // На некоторых устройствах после touchend браузер дополнительно создаёт click.
+    if (Date.now() - lastTouchOpenAt < 800) return;
+    const card = findProductCard(e.target);
+    if (!card) return;
+    const index = parseInt(card.getAttribute('data-product-index'), 10);
+    if (!isNaN(index)) openViewer(index);
+  }, false);
 
   $('products').addEventListener('keydown', e => {
     if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-product-index]')) {
