@@ -159,6 +159,9 @@
       border-radius: 15px;
       box-shadow: 0 2px 8px #1c3b2c08;
       min-width: 0;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .photo-wrap {
@@ -424,8 +427,8 @@
 
     .viewer-panel {
       position: relative;
-      width: min(100%, 900px);
-      height: min(100%, 900px);
+      width: min(100%, 1100px);
+      height: min(94vh, 1000px);
       background: #fff;
       border-radius: 18px;
       overflow: hidden;
@@ -474,12 +477,25 @@
     }
 
     .viewer-arrow {
-      top: 50%;
-      transform: translateY(-50%);
+      top: auto;
+      bottom: 22px;
+      transform: none;
+      width: 42px;
+      height: 42px;
+      background: rgba(35, 51, 45, .28);
+      color: rgba(255, 255, 255, .82);
+      box-shadow: none;
+      font-size: 25px;
+      backdrop-filter: blur(3px);
     }
 
-    .viewer-prev { left: 12px; }
-    .viewer-next { right: 12px; }
+    .viewer-arrow:hover {
+      background: rgba(35, 51, 45, .58);
+      color: #fff;
+    }
+
+    .viewer-prev { left: 18px; }
+    .viewer-next { right: 18px; }
 
     .viewer-counter {
       position: absolute;
@@ -539,6 +555,7 @@
       .viewer-name { font-size: 19px; }
       .viewer-price { font-size: 22px; }
       .viewer-arrow, .viewer-close { width: 40px; height: 40px; }
+      .viewer-arrow { bottom: 18px; background: rgba(35, 51, 45, .24); }
     }
 
     @media (min-width: 600px) and (orientation: portrait) {
@@ -547,6 +564,7 @@
       .viewer-name { font-size: 29px; }
       .viewer-meta { font-size: 18px; }
       .viewer-price { font-size: 31px; }
+      .viewer-arrow { bottom: 24px; }
     }
 
   </style>
@@ -1101,9 +1119,26 @@
     viewerHTML(visibleProducts[viewerIndex]);
   }
 
-  $('products').addEventListener('click', e => {
+  // Открываем товар отдельным обработчиком касания — это надёжнее
+  // на планшетах, где браузер иногда не передаёт обычный click.
+  let lastTouchOpenAt = 0;
+
+  function openCardFromEvent(e) {
     const card = e.target.closest('[data-product-index]');
-    if (card) openViewer(Number(card.dataset.productIndex));
+    if (!card || !$('products').contains(card)) return false;
+    openViewer(Number(card.dataset.productIndex));
+    return true;
+  }
+
+  $('products').addEventListener('pointerup', e => {
+    if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+    if (openCardFromEvent(e)) lastTouchOpenAt = Date.now();
+  });
+
+  $('products').addEventListener('click', e => {
+    // Не открываем второй раз после pointerup на сенсорном экране.
+    if (Date.now() - lastTouchOpenAt < 700) return;
+    openCardFromEvent(e);
   });
 
   $('products').addEventListener('keydown', e => {
