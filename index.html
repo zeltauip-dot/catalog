@@ -10,518 +10,548 @@
 
   <style>
     :root {
-      --green:#285c4d;
-      --green2:#367963;
-      --pale:#edf5f0;
-      --yellow:#ffe36a;
-      --ink:#23332d;
-      --muted:#68776f;
-      --line:#e1e9e4;
-      --white:#fff;
+      --green: #285c4d;
+      --green2: #367963;
+      --pale: #edf5f0;
+      --yellow: #ffe36a;
+      --ink: #23332d;
+      --muted: #68776f;
+      --line: #e1e9e4;
+      --white: #fff;
     }
 
-    * { box-sizing:border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
-      margin:0;
-      background:#f4f7f5;
-      color:var(--ink);
-      font-family:Arial,Helvetica,sans-serif;
+      margin: 0;
+      background: #f4f7f5;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     header {
-      background:var(--green);
-      color:#fff;
-      padding:18px max(16px,calc((100% - 1180px)/2));
-      box-shadow:0 2px 8px #0001;
+      background: var(--green);
+      color: #fff;
+      padding: 18px max(16px, calc((100% - 1180px) / 2));
+      box-shadow: 0 2px 8px #0001;
     }
 
     .brand {
-      font-weight:800;
-      font-size:23px;
-      letter-spacing:.2px;
+      font-weight: 800;
+      font-size: 23px;
+      letter-spacing: .2px;
     }
 
     .subtitle {
-      margin-top:5px;
-      color:#e0eee7;
-      font-size:14px;
+      margin-top: 5px;
+      color: #e0eee7;
+      font-size: 14px;
     }
 
     main {
-      max-width:1180px;
-      margin:0 auto;
-      padding:18px 16px 40px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
     }
 
     .toolbar {
-      display:grid;
-      grid-template-columns:1fr auto auto;
-      gap:12px;
-      margin-bottom:14px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
-    input,select {
-      font:inherit;
-      border:1px solid #d5e0d9;
-      border-radius:11px;
-      background:#fff;
-      padding:12px 13px;
-      min-width:0;
-      outline-color:var(--green2);
-    }
-
-    .refresh-btn {
-      border:0;
-      border-radius:11px;
-      background:var(--green);
-      color:#fff;
-      padding:12px 16px;
-      font:inherit;
-      font-weight:700;
-      cursor:pointer;
-      white-space:nowrap;
-    }
-
-    .refresh-btn:disabled {
-      opacity:.6;
-      cursor:wait;
+    input, select {
+      font: inherit;
+      border: 1px solid #d5e0d9;
+      border-radius: 11px;
+      background: #fff;
+      padding: 12px 13px;
+      min-width: 0;
+      outline-color: var(--green2);
     }
 
     .territory {
-      display:flex;
-      gap:8px;
-      margin-bottom:13px;
-      flex-wrap:wrap;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 13px;
+      flex-wrap: wrap;
     }
 
-    .pill,.cat-btn {
-      border:1px solid #cddbd2;
-      border-radius:999px;
-      background:#fff;
-      padding:9px 14px;
-      font:inherit;
-      cursor:pointer;
-      color:var(--green);
-      font-weight:700;
+    .pill, .cat-btn {
+      border: 1px solid #cddbd2;
+      border-radius: 999px;
+      background: #fff;
+      padding: 9px 14px;
+      font: inherit;
+      cursor: pointer;
+      color: var(--green);
+      font-weight: 700;
     }
 
-    .pill.active,.cat-btn.active {
-      background:var(--green);
-      border-color:var(--green);
-      color:#fff;
+    .pill.active, .cat-btn.active {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
     }
 
     .category-list {
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin:0 0 17px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 0 0 17px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 13px;
     }
 
     .info {
-      font-size:13px;
-      color:var(--muted);
-      margin:0 0 13px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .refresh-btn {
+      flex-shrink: 0;
+      border: 1px solid var(--green);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--green);
+      padding: 9px 13px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .refresh-btn:hover {
+      background: var(--pale);
+    }
+
+    .refresh-btn:disabled {
+      opacity: .6;
+      cursor: wait;
     }
 
     .grid {
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:13px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px;
     }
 
     .card {
-      display:grid;
-      grid-template-columns:minmax(110px,34%) 1fr;
-      gap:14px;
-      padding:13px;
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:15px;
-      box-shadow:0 2px 8px #1c3b2c08;
-      min-width:0;
-      cursor:pointer;
-      -webkit-tap-highlight-color:transparent;
+      display: grid;
+      grid-template-columns: minmax(110px, 34%) 1fr;
+      gap: 14px;
+      padding: 13px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      box-shadow: 0 2px 8px #1c3b2c08;
+      min-width: 0;
     }
 
     .photo-wrap {
-      min-height:150px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#f7f9f7;
-      border-radius:10px;
-      overflow:hidden;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f7f9f7;
+      border-radius: 10px;
+      overflow: hidden;
     }
 
     .photo {
-      width:100%;
-      height:100%;
-      max-height:220px;
-      object-fit:contain;
+      width: 100%;
+      height: 100%;
+      max-height: 220px;
+      object-fit: contain;
     }
 
     .placeholder {
-      color:#9aa9a0;
-      font-size:12px;
-      text-align:center;
-      padding:12px;
+      color: #9aa9a0;
+      font-size: 12px;
+      text-align: center;
+      padding: 12px;
     }
 
     .details {
-      min-width:0;
-      display:flex;
-      flex-direction:column;
-      gap:7px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
     }
 
     .category {
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:.4px;
-      color:var(--green2);
-      font-weight:800;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      color: var(--green2);
+      font-weight: 800;
     }
 
     .name {
-      font-size:17px;
-      line-height:1.25;
-      font-weight:800;
-      overflow-wrap:anywhere;
+      font-size: 17px;
+      line-height: 1.25;
+      font-weight: 800;
+      overflow-wrap: anywhere;
     }
 
     .brandline {
-      font-size:13px;
-      color:var(--muted);
+      font-size: 13px;
+      color: var(--muted);
     }
 
     .meta {
-      font-size:12px;
-      color:#53645b;
-      line-height:1.45;
-      overflow-wrap:anywhere;
+      font-size: 12px;
+      color: #53645b;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
     }
 
     .prices {
-      display:flex;
-      gap:7px;
-      flex-wrap:wrap;
-      margin-top:auto;
-      padding-top:3px;
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 3px;
     }
 
     .price-main {
-      display:inline-block;
-      background:var(--yellow);
-      color:#262a1c;
-      border-radius:7px;
-      padding:8px 10px;
-      font-size:18px;
-      font-weight:800;
+      display: inline-block;
+      background: var(--yellow);
+      color: #262a1c;
+      border-radius: 7px;
+      padding: 8px 10px;
+      font-size: 18px;
+      font-weight: 800;
     }
 
     .price-old {
-      font-size:12px;
-      color:#8a918d;
-      text-decoration:line-through;
+      font-size: 12px;
+      color: #8a918d;
+      text-decoration: line-through;
     }
 
     .price-extra {
-      font-size:12px;
-      color:var(--muted);
-      align-self:center;
+      font-size: 12px;
+      color: var(--muted);
+      align-self: center;
     }
 
     .desc {
-      font-size:12px;
-      color:#53645b;
-      line-height:1.4;
-      overflow-wrap:anywhere;
+      font-size: 12px;
+      color: #53645b;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
     }
 
     .badge {
-      display:inline-block;
-      background:#e6f2eb;
-      color:var(--green);
-      border-radius:5px;
-      padding:4px 7px;
-      font-size:11px;
-      font-weight:800;
-      align-self:flex-start;
+      display: inline-block;
+      background: #e6f2eb;
+      color: var(--green);
+      border-radius: 5px;
+      padding: 4px 7px;
+      font-size: 11px;
+      font-weight: 800;
+      align-self: flex-start;
     }
 
-    .empty,.loading,.error {
-      background:#fff;
-      border-radius:12px;
-      padding:24px;
-      text-align:center;
-      color:var(--muted);
-      grid-column:1/-1;
+    .empty, .loading, .error {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      grid-column: 1 / -1;
     }
 
-    .error { color:#8a342e; }
+    .error {
+      color: #8a342e;
+    }
 
     .foot {
-      text-align:center;
-      color:#87948d;
-      font-size:12px;
-      margin-top:22px;
+      text-align: center;
+      color: #87948d;
+      font-size: 12px;
+      margin-top: 22px;
     }
 
-    /* ОКНО ПРОСМОТРА ТОВАРА */
+    /* Телефоны */
+    @media (max-width: 760px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
 
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        grid-template-columns: 34% 1fr;
+        gap: 11px;
+        padding: 10px;
+      }
+
+      .photo-wrap {
+        min-height: 130px;
+      }
+
+      .name {
+        font-size: 15px;
+      }
+
+      .price-main {
+        font-size: 17px;
+      }
+    }
+
+    /* Планшет в книжной ориентации */
+    @media (min-width: 600px) and (max-width: 1100px) and (orientation: portrait) {
+      main {
+        padding: 22px 26px 44px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .card {
+        grid-template-columns: 42% 1fr;
+        gap: 22px;
+        padding: 22px;
+        border-radius: 18px;
+      }
+
+      .photo-wrap {
+        min-height: 280px;
+      }
+
+      .photo {
+        max-height: 340px;
+      }
+
+      .details {
+        gap: 11px;
+      }
+
+      .name {
+        font-size: 24px;
+        line-height: 1.4;
+      }
+
+      .price-main {
+        font-size: 29px;
+        padding: 12px 15px;
+      }
+
+      .meta, .brandline, .desc {
+        font-size: 17px;
+        line-height: 1.5;
+      }
+
+      .category {
+        font-size: 14px;
+      }
+
+      .badge {
+        font-size: 14px;
+        padding: 6px 9px;
+      }
+    }
+
+    /* Планшет в альбомной ориентации */
+    @media (min-width: 761px) and (max-width: 1100px) and (orientation: landscape) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        grid-template-columns: 34% 1fr;
+        padding: 12px;
+      }
+
+      .name {
+        font-size: 17px;
+      }
+
+      .price-main {
+        font-size: 20px;
+      }
+    }
+
+    /* Очень узкие экраны */
+    @media (max-width: 380px) {
+      .card {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-wrap {
+        height: 180px;
+      }
+
+      .photo {
+        height: 180px;
+      }
+    }
+
+    /* Просмотр карточки крупным планом */
     .viewer {
-      position:fixed;
-      inset:0;
-      z-index:1000;
-      background:rgba(13,24,19,.94);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:0;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      background: rgba(10, 20, 15, .78);
+      padding: 12px;
     }
 
     .viewer.open {
-      display:flex;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .viewer-panel {
-      position:relative;
-      width:100%;
-      height:100dvh;
-      max-height:100dvh;
-      background:#fff;
-      border-radius:0;
-      overflow:hidden;
-      display:grid;
-      grid-template-rows:minmax(0,1fr) minmax(220px,42dvh);
-      box-shadow:0 12px 50px #0005;
+      position: relative;
+      width: min(100%, 900px);
+      height: min(100%, 900px);
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      box-shadow: 0 12px 50px #0005;
     }
 
-    .viewer-top {
-      position:relative;
-      min-height:0;
-      background:#f5f7f5;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:55px 65px 15px;
-      overflow:hidden;
+    .viewer-photo-area {
+      position: relative;
+      min-height: 0;
+      background: #f5f7f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      touch-action: pan-y;
     }
 
-    .viewer-image {
-      display:block;
-      max-width:100%;
-      max-height:100%;
-      width:auto;
-      height:auto;
-      object-fit:contain;
+    .viewer-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
-    .viewer-no-image {
-      color:#87948d;
-      font-size:18px;
-      text-align:center;
+    .viewer-close, .viewer-arrow {
+      position: absolute;
+      z-index: 2;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,.94);
+      color: var(--green);
+      font-size: 27px;
+      font-weight: 700;
+      width: 46px;
+      height: 46px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px #0002;
     }
 
     .viewer-close {
-      position:absolute;
-      top:12px;
-      right:14px;
-      z-index:2;
-      border:0;
-      border-radius:50%;
-      width:44px;
-      height:44px;
-      background:#fff;
-      color:#23332d;
-      font-size:30px;
-      line-height:1;
-      cursor:pointer;
-      box-shadow:0 2px 8px #0002;
+      top: 12px;
+      right: 12px;
+      font-size: 30px;
+      line-height: 1;
     }
 
-    .viewer-nav {
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      width:48px;
-      height:58px;
-      border:0;
-      border-radius:12px;
-      background:#ffffffdf;
-      color:#23332d;
-      font-size:34px;
-      cursor:pointer;
-      box-shadow:0 2px 8px #0002;
+    .viewer-arrow {
+      top: 50%;
+      transform: translateY(-50%);
     }
 
-    .viewer-prev { left:12px; }
-    .viewer-next { right:12px; }
-
-    .viewer-nav:disabled {
-      opacity:.25;
-      cursor:default;
-    }
+    .viewer-prev { left: 12px; }
+    .viewer-next { right: 12px; }
 
     .viewer-counter {
-      position:absolute;
-      top:18px;
-      left:18px;
-      background:#ffffffdf;
-      border-radius:20px;
-      padding:7px 12px;
-      font-size:13px;
-      font-weight:700;
-      color:#23332d;
+      position: absolute;
+      left: 50%;
+      bottom: 12px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.58);
+      color: #fff;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 14px;
     }
 
     .viewer-details {
-      min-height:0;
-      display:grid;
-      grid-template-rows:minmax(0,1fr) auto;
-      overflow:hidden;
-      padding:12px 22px 12px;
-      padding-bottom:max(12px,env(safe-area-inset-bottom));
-      background:#fff;
-    }
-
-    .viewer-info {
-      min-height:0;
-      overflow-y:auto;
-      -webkit-overflow-scrolling:touch;
-      display:flex;
-      flex-direction:column;
-      gap:7px;
-      padding-bottom:8px;
+      max-height: 42%;
+      overflow-y: auto;
+      padding: 18px 22px 22px;
+      overscroll-behavior: contain;
     }
 
     .viewer-name {
-      font-size:22px;
-      line-height:1.25;
-      font-weight:800;
-    }
-
-    .viewer-brand {
-      font-size:15px;
-      color:var(--muted);
+      font-size: 23px;
+      line-height: 1.25;
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
     .viewer-meta {
-      font-size:15px;
-      line-height:1.4;
-      color:#53645b;
-      overflow-wrap:anywhere;
-    }
-
-    .viewer-desc {
-      font-size:14px;
-      line-height:1.4;
-      color:#53645b;
-    }
-
-    .viewer-pricebar {
-      border-top:1px solid var(--line);
-      padding-top:9px;
-      background:#fff;
+      color: #53645b;
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 5px 0;
+      overflow-wrap: anywhere;
     }
 
     .viewer-price {
-      font-size:23px;
-      font-weight:800;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--yellow);
+      color: #262a1c;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 25px;
+      font-weight: 800;
     }
 
-    .viewer-price .price-main {
-      font-size:24px;
+    @media (max-width: 600px) {
+      .viewer { padding: 0; }
+      .viewer-panel { width: 100%; height: 100%; border-radius: 0; }
+      .viewer-details { max-height: 45%; padding: 14px 16px 20px; }
+      .viewer-name { font-size: 19px; }
+      .viewer-price { font-size: 22px; }
+      .viewer-arrow, .viewer-close { width: 40px; height: 40px; }
     }
 
-    @media(max-width:760px) {
-      .grid { grid-template-columns:1fr; }
-      .toolbar { grid-template-columns:1fr; }
-      .card {
-        grid-template-columns:34% 1fr;
-        gap:11px;
-        padding:10px;
-      }
-      .photo-wrap { min-height:130px; }
-      .name { font-size:15px; }
-      .price-main { font-size:17px; }
+    @media (min-width: 600px) and (orientation: portrait) {
+      .viewer-details { max-height: 40%; padding: 22px 28px 26px; }
+      .viewer-name { font-size: 29px; }
+      .viewer-meta { font-size: 18px; }
+      .viewer-price { font-size: 31px; }
     }
 
-    @media(min-width:600px) and (max-width:1100px) and (orientation:portrait) {
-      main { padding:22px 26px 44px; }
-      .grid {
-        grid-template-columns:1fr;
-        gap:22px;
-      }
-      .card {
-        grid-template-columns:42% 1fr;
-        gap:22px;
-        padding:22px;
-        border-radius:18px;
-      }
-      .photo-wrap { min-height:280px; }
-      .photo { max-height:340px; }
-      .details { gap:11px; }
-      .name { font-size:24px; line-height:1.4; }
-      .price-main { font-size:29px; padding:12px 15px; }
-      .meta,.brandline,.desc { font-size:17px; line-height:1.5; }
-      .category { font-size:14px; }
-      .badge { font-size:14px; padding:6px 9px; }
-    }
-
-    @media(min-width:761px) and (max-width:1100px) and (orientation:landscape) {
-      .grid { grid-template-columns:1fr; }
-      .card { grid-template-columns:34% 1fr; }
-    }
-
-    @media(max-width:380px) {
-      .card { grid-template-columns:1fr; }
-      .photo-wrap { height:180px; }
-      .photo { height:180px; }
-    }
-
-    @media(max-width:600px) {
-      .viewer-panel {
-        grid-template-rows:minmax(0,1fr) minmax(210px,44dvh);
-      }
-      .viewer-top { padding:54px 48px 12px; }
-      .viewer-details { padding:10px 16px 10px; }
-      .viewer-name { font-size:19px; }
-      .viewer-nav {
-        width:38px;
-        height:48px;
-        font-size:28px;
-      }
-      .viewer-prev { left:6px; }
-      .viewer-next { right:6px; }
-    }
-
-    @media(orientation:landscape) and (max-height:600px) {
-      .viewer-panel {
-        grid-template-rows:minmax(0,1fr) minmax(145px,35dvh);
-      }
-      .viewer-details { padding:7px 18px 7px; }
-      .viewer-name { font-size:18px; }
-      .viewer-info { gap:4px; }
-    }
   </style>
 </head>
 
 <body>
-
 <header>
   <div class="brand">ИП Желтау</div>
   <div class="subtitle">Каталог продукции</div>
 </header>
 
 <main>
-
   <div class="territory" aria-label="Территория">
     <button class="pill active" data-territory="all">Все товары</button>
     <button class="pill" data-territory="city">Город</button>
@@ -529,136 +559,169 @@
   </div>
 
   <div class="toolbar">
-    <input id="search" type="search"
+    <input
+      id="search"
+      type="search"
       placeholder="Поиск по названию, бренду или штрихкоду…"
-      aria-label="Поиск товаров">
+      aria-label="Поиск товаров"
+    >
 
     <select id="sort" aria-label="Сортировка">
       <option value="default">Сначала по порядку</option>
       <option value="name">По названию А–Я</option>
       <option value="price">Сначала дешевле</option>
     </select>
-
-    <button id="refreshBtn" class="refresh-btn" type="button">
-      ↻ Обновить каталог
-    </button>
   </div>
 
   <div id="categories" class="category-list" aria-label="Категории">
-    <button class="cat-btn active" data-category="all">Все категории</button>
+    <button class="cat-btn active" data-category="all">
+      Все категории
+    </button>
   </div>
 
-  <p id="status" class="info">Загрузка каталога…</p>
+  <div class="status-row">
+    <p id="status" class="info" aria-live="polite">
+      Загрузка каталога…
+    </p>
+
+    <button id="refreshBtn" class="refresh-btn" type="button">
+      Обновить
+    </button>
+  </div>
 
   <section id="products" class="grid">
     <div class="loading">Загружаем товары…</div>
   </section>
 
-  <div class="foot">
-    Каталог ИП Желтау · При подключении к интернету каталог обновляется автоматически
-  </div>
 
-</main>
-
-<!-- ОКНО ТОВАРА -->
-
-<div id="viewer" class="viewer" aria-hidden="true">
-  <div class="viewer-panel" role="dialog" aria-modal="true" aria-label="Просмотр товара">
-
-    <div id="viewerTop" class="viewer-top">
-      <div id="viewerCounter" class="viewer-counter"></div>
-
-      <button id="viewerClose" class="viewer-close" type="button" aria-label="Закрыть">×</button>
-
-      <button id="viewerPrev" class="viewer-nav viewer-prev" type="button" aria-label="Предыдущий товар">‹</button>
-
-      <div id="viewerImageHost" class="viewer-no-image">
-        Фото пока не добавлено
+  <div id="viewer" class="viewer" aria-hidden="true">
+    <div class="viewer-panel" role="dialog" aria-modal="true" aria-label="Карточка товара">
+      <div id="viewerPhotoArea" class="viewer-photo-area">
+        <img id="viewerPhoto" class="viewer-photo" alt="">
+        <button id="viewerClose" class="viewer-close" type="button" aria-label="Закрыть">×</button>
+        <button id="viewerPrev" class="viewer-arrow viewer-prev" type="button" aria-label="Предыдущий товар">‹</button>
+        <button id="viewerNext" class="viewer-arrow viewer-next" type="button" aria-label="Следующий товар">›</button>
+        <div id="viewerCounter" class="viewer-counter"></div>
       </div>
-
-      <button id="viewerNext" class="viewer-nav viewer-next" type="button" aria-label="Следующий товар">›</button>
+      <div id="viewerDetails" class="viewer-details"></div>
     </div>
-
-    <div id="viewerDetails" class="viewer-details"></div>
-
   </div>
-</div>
+
+  <div class="foot">
+    Каталог ИП Желтау · Данные сохраняются для работы без интернета
+  </div>
+</main>
 
 <script>
 (() => {
   'use strict';
 
-  const API_URL = 'https://script.google.com/macros/s/AKfycbwtA8LXvNdYI8C0DHE9SQQjc03_pl5Y2k53gqhHwVEpUZuKe19Mz5yq2xruY4kdUZY/exec';
+  const API_URL =
+    'https://script.google.com/macros/s/AKfycbwtA8LXvNdYI8C0DHE9SQQjc03_pl5Y2k53gqhHwVEpUZuKe19Mz5yq2xruY4kdUZY/exec';
+
   const DATA_KEY = 'zheltau-products-v1';
+  const HOUR = 60 * 60 * 1000;
 
   const $ = id => document.getElementById(id);
 
   let allProducts = [];
-  let visibleProducts = [];
-  let viewerIndex = -1;
   let activeCategory = 'all';
   let activeTerritory = 'all';
-  let touchStart = null;
-  let lastTouchOpen = 0;
   let refreshing = false;
+  let lastCheckAt = 0;
+  let visibleProducts = [];
+  let viewerIndex = 0;
 
   const norm = value => String(value ?? '').trim();
 
   const get = (p, ...keys) => {
     for (const key of keys) {
       const wanted = String(key).trim().toLowerCase();
+
       const foundKey = Object.keys(p || {}).find(
         k => String(k).trim().toLowerCase() === wanted
       );
+
       if (foundKey !== undefined && norm(p[foundKey])) {
         return norm(p[foundKey]);
       }
     }
+
     return '';
   };
 
   const yes = value =>
-    ['да','yes','true','1','город','регион'].includes(
-      norm(value).toLocaleLowerCase('ru')
-    );
+    ['да', 'yes', 'true', '1', 'город', 'регион']
+      .includes(norm(value).toLocaleLowerCase('ru'));
 
   const isActive = p => {
-    const status = norm(get(p,'Статус','status')).toLocaleLowerCase('ru');
+    const status = norm(get(p, 'Статус', 'status'))
+      .toLocaleLowerCase('ru');
+
     return status === 'активен' || status === 'новинка';
   };
 
   const isNew = p =>
-    norm(get(p,'Статус','status')).toLocaleLowerCase('ru') === 'новинка';
+    norm(get(p, 'Статус', 'status'))
+      .toLocaleLowerCase('ru') === 'новинка';
 
   const escapeHTML = value =>
     norm(value).replace(/[&<>"']/g, c => ({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#39;'
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
     }[c]));
 
   const money = value => {
     const s = norm(value);
     if (!s) return '';
+
     const n = Number(
-      s.replace(/\s/g,'').replace(',','.').replace(/[^\d.-]/g,'')
+      s.replace(/\s/g, '')
+        .replace(',', '.')
+        .replace(/[^\d.-]/g, '')
     );
+
     return Number.isFinite(n) && n !== 0
-      ? new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n) + ' ₸'
+      ? new Intl.NumberFormat('ru-RU', {
+          maximumFractionDigits: 2
+        }).format(n) + ' ₸'
       : s;
   };
 
-  function formatSavedDate(timestamp) {
-    if (!timestamp) return 'дата неизвестна';
+  function formatDateTime(timestamp) {
+    if (!timestamp) return 'нет данных';
+
     return new Date(timestamp).toLocaleString('ru-RU', {
-      day:'2-digit',
-      month:'2-digit',
-      year:'numeric',
-      hour:'2-digit',
-      minute:'2-digit'
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
     });
+  }
+
+  function updateStatus(message) {
+    $('status').textContent = message;
+  }
+
+  function activeCount() {
+    return allProducts.filter(isActive).length;
+  }
+
+  function showSavedStatus(prefix = 'Сохранённая версия') {
+    const saved = readCache();
+
+    if (!saved) {
+      updateStatus(prefix);
+      return;
+    }
+
+    updateStatus(
+      `${prefix} · ${activeCount()} активных товаров · последнее обновление: ${formatDateTime(saved.savedAt)}`
+    );
   }
 
   function loadJSONP() {
@@ -666,22 +729,30 @@
       const cb = 'zheltauCallback_' + Date.now();
       const script = document.createElement('script');
 
-      const timer = setTimeout(
-        () => finish(new Error('Истекло время ожидания ответа каталога')),
-        15000
-      );
+      const timer = setTimeout(() => {
+        finish(new Error('Истекло время ожидания ответа каталога'));
+      }, 15000);
 
       function finish(err, data) {
         clearTimeout(timer);
         delete window[cb];
         script.remove();
-        err ? reject(err) : resolve(data);
+
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
       }
 
       window[cb] = data => finish(null, data);
-      script.onerror = () => finish(new Error('Не удалось подключиться к каталогу'));
+
+      script.onerror = () => {
+        finish(new Error('Не удалось подключиться к каталогу'));
+      };
 
       script.src = API_URL + '?callback=' + cb + '&_=' + Date.now();
+
       document.head.appendChild(script);
     });
   }
@@ -690,35 +761,51 @@
     try {
       localStorage.setItem(
         DATA_KEY,
-        JSON.stringify({savedAt:Date.now(), products})
+        JSON.stringify({
+          savedAt: Date.now(),
+          products
+        })
       );
-    } catch(e) {}
+    } catch (e) {
+      console.warn('Не удалось сохранить товары на устройстве', e);
+    }
   }
 
   function readCache() {
     try {
-      const saved = JSON.parse(localStorage.getItem(DATA_KEY) || 'null');
-      return saved && Array.isArray(saved.products) ? saved : null;
-    } catch(e) {
+      const saved = JSON.parse(
+        localStorage.getItem(DATA_KEY) || 'null'
+      );
+
+      return saved && Array.isArray(saved.products)
+        ? saved
+        : null;
+    } catch (e) {
       return null;
     }
   }
 
-  async function refreshData() {
+  async function refreshData(manual = false) {
     if (refreshing) return;
+
+    if (!navigator.onLine) {
+      showSavedStatus('Нет интернета. Используются сохранённые данные');
+      return;
+    }
 
     refreshing = true;
     $('refreshBtn').disabled = true;
-    $('refreshBtn').textContent = 'Обновляем…';
+    $('refreshBtn').textContent = 'Обновление…';
 
     const cached = readCache();
 
     if (cached) {
-      allProducts = cached.products;
+      allProducts = cached.products.filter(isActive);
       render();
-      $('status').textContent =
-        'Сохранённая версия от ' + formatSavedDate(cached.savedAt) +
-        ' · проверяем обновления…';
+
+      showSavedStatus('Проверяем обновления');
+    } else {
+      updateStatus('Загрузка каталога…');
     }
 
     try {
@@ -728,48 +815,64 @@
         throw new Error('Получен неверный формат данных');
       }
 
-      allProducts = data.filter(
-        p => p && Object.values(p).some(v => norm(v))
-      );
+      const products = data.filter(p => {
+        if (!p || !Object.values(p).some(v => norm(v))) {
+          return false;
+        }
 
+        const status = get(p, 'Статус', 'status')
+          .toLocaleLowerCase('ru')
+          .trim();
+
+        return status === 'активен' || status === 'новинка';
+      });
+
+      allProducts = products;
       cacheProducts(allProducts);
+      lastCheckAt = Date.now();
+
       render();
 
-      const visibleCount = allProducts.filter(isActive).length;
       const saved = readCache();
 
-      $('status').textContent =
-        `Активных товаров: ${visibleCount} · обновлено ${formatSavedDate(saved.savedAt)}`;
+      updateStatus(
+        `Активных товаров: ${activeCount()} · обновлено: ${formatDateTime(saved?.savedAt)}`
+      );
 
-    } catch(err) {
-      const saved = readCache();
+    } catch (err) {
+      console.warn('Не удалось обновить каталог:', err);
 
       if (cached) {
-        $('status').textContent =
-          `Офлайн-режим · сохранённая версия от ${formatSavedDate(saved?.savedAt)} · ${allProducts.filter(isActive).length} активных товаров`;
+        showSavedStatus(
+          'Не удалось обновить. Используются сохранённые данные'
+        );
       } else {
-        $('status').textContent =
-          'Не удалось загрузить каталог. Проверьте подключение к интернету и обновите страницу.';
+        updateStatus(
+          'Не удалось загрузить каталог. Проверьте интернет и повторите попытку.'
+        );
 
         $('products').innerHTML =
           '<div class="error">Каталог пока не загружен. При первом открытии необходимо подключение к интернету.</div>';
       }
-
     } finally {
       refreshing = false;
       $('refreshBtn').disabled = false;
-      $('refreshBtn').textContent = '↻ Обновить каталог';
+      $('refreshBtn').textContent = 'Обновить';
     }
   }
 
   function imageURL(raw) {
     const url = norm(raw);
+
     if (!url) return '';
 
-    const idMatch = url.match(/(?:\/d\/|[?&]id=)([a-zA-Z0-9_-]{15,})/);
+    const idMatch = url.match(
+      /(?:\/d\/|[?&]id=)([a-zA-Z0-9_-]{15,})/
+    );
 
     if (/drive\.google\.com/.test(url) && idMatch) {
-      return 'https://drive.google.com/uc?export=view&id=' + idMatch[1];
+      return 'https://drive.google.com/thumbnail?id='
+        + idMatch[1] + '&sz=w800';
     }
 
     return url;
@@ -780,10 +883,10 @@
       ...new Set(
         products
           .filter(isActive)
-          .map(p => get(p,'Категория','category'))
+          .map(p => get(p, 'Категория', 'category'))
           .filter(Boolean)
       )
-    ].sort((a,b) => a.localeCompare(b,'ru'));
+    ].sort((a, b) => a.localeCompare(b, 'ru'));
 
     const host = $('categories');
     const previousCategory = activeCategory;
@@ -793,8 +896,8 @@
     const addButton = (label, value) => {
       const b = document.createElement('button');
 
-      b.className = 'cat-btn' +
-        (activeCategory === value ? ' active' : '');
+      b.className =
+        'cat-btn' + (activeCategory === value ? ' active' : '');
 
       b.textContent = label;
       b.dataset.category = value;
@@ -807,48 +910,49 @@
       host.appendChild(b);
     };
 
-    addButton('Все категории','all');
-    categories.forEach(c => addButton(c,c));
+    addButton('Все категории', 'all');
+    categories.forEach(c => addButton(c, c));
 
-    if (previousCategory !== 'all' && !categories.includes(previousCategory)) {
+    if (
+      previousCategory !== 'all' &&
+      !categories.includes(previousCategory)
+    ) {
       activeCategory = 'all';
     }
 
-    [...host.querySelectorAll('[data-category]')].forEach(b => {
-      b.classList.toggle('active', b.dataset.category === activeCategory);
+    [
+      ...host.querySelectorAll('[data-category]')
+    ].forEach(b => {
+      b.classList.toggle(
+        'active',
+        b.dataset.category === activeCategory
+      );
     });
   }
 
   function cardHTML(p, index) {
-    const name = get(p,'Наименование','Название','name') || 'Без названия';
-    const brand = get(p,'Бренд','brand');
-    const category = get(p,'Категория','category');
-    const packaging = get(p,'Фасовка','Упаковка','packaging');
-    const barcode = get(p,'Штрихкод','barcode');
-    const quantity = get(p,'В коробе','Количество в коробе','quantity per box');
-    const price = get(p,'Цена','price');
-    const oldPrice = get(p,'Старая цена','Цена старая','old price');
-    const boxPrice = get(p,'Цена за коробку','Цена коробки','box price');
-    const kgPrice = get(p,'Цена за кг','Цена за килограмм','kg price');
-    const desc = get(p,'Описание','description');
-    const img = imageURL(get(p,'Фото','Изображение','photo','image'));
+    const name =
+      get(p, 'Наименование', 'Название', 'name') || 'Без названия';
+
+    const brand = get(p, 'Бренд', 'brand');
+    const category = get(p, 'Категория', 'category');
+    const packaging = get(p, 'Фасовка', 'Упаковка', 'packaging');
+    const barcode = get(p, 'Штрихкод', 'barcode');
+    const quantity = get(p, 'В коробе', 'Количество в коробе', 'quantity per box');
+    const price = get(p, 'Цена', 'price');
+    const oldPrice = get(p, 'Старая цена', 'Цена старая', 'old price');
+    const boxPrice = get(p, 'Цена за коробку', 'Цена коробки', 'box price');
+    const kgPrice = get(p, 'Цена за кг', 'Цена за килограмм', 'kg price');
+    const desc = get(p, 'Описание', 'description');
+    const img = imageURL(get(p, 'Фото', 'Изображение', 'photo', 'image'));
+
+    const photoHTML = img
+      ? `<img class="photo" src="${escapeHTML(img)}" alt="${escapeHTML(name)}" loading="lazy" onerror="this.remove();this.parentElement.innerHTML='<div class=\\'placeholder\\'>Фото пока не добавлено</div>'">`
+      : '<div class="placeholder">Фото пока не добавлено</div>';
 
     return `
-      <article class="card"
-        data-product-index="${index}"
-        tabindex="0"
-        role="button"
-        aria-label="Открыть товар: ${escapeHTML(name)}">
-
-        <div class="photo-wrap">
-          ${img
-            ? `<img class="photo" src="${escapeHTML(img)}"
-                alt="${escapeHTML(name)}"
-                loading="lazy"
-                onerror="this.remove();this.parentElement.innerHTML='<div class=\\'placeholder\\'>Фото пока не добавлено</div>'">`
-            : '<div class="placeholder">Фото пока не добавлено</div>'}
-        </div>
-
+      <article class="card" data-product-index="${index}" role="button" tabindex="0" aria-label="Открыть товар крупно">
+        <div class="photo-wrap">${photoHTML}</div>
         <div class="details">
           ${category ? `<div class="category">${escapeHTML(category)}</div>` : ''}
           <div class="name">${escapeHTML(name)}</div>
@@ -858,7 +962,6 @@
           ${barcode ? `<div class="meta">Штрихкод: ${escapeHTML(barcode)}</div>` : ''}
           ${quantity ? `<div class="meta">В коробе: ${escapeHTML(quantity)} шт.</div>` : ''}
           ${desc ? `<div class="desc">${escapeHTML(desc)}</div>` : ''}
-
           <div class="prices">
             ${oldPrice ? `<span class="price-old">${escapeHTML(money(oldPrice))}</span>` : ''}
             ${price ? `<span class="price-main">${escapeHTML(money(price))}</span>` : ''}
@@ -879,16 +982,16 @@
 
     let list = activeProducts.filter(p => {
       const text = [
-        get(p,'Наименование','Название'),
-        get(p,'Бренд'),
-        get(p,'Штрихкод'),
-        get(p,'Код'),
-        get(p,'Описание')
+        get(p, 'Наименование', 'Название'),
+        get(p, 'Бренд'),
+        get(p, 'Штрихкод'),
+        get(p, 'Код'),
+        get(p, 'Описание')
       ].join(' ').toLocaleLowerCase('ru');
 
-      const cat = get(p,'Категория');
-      const city = get(p,'Город');
-      const region = get(p,'Регион');
+      const cat = get(p, 'Категория');
+      const city = get(p, 'Город');
+      const region = get(p, 'Регион');
 
       const territoryOK =
         activeTerritory === 'all' ||
@@ -903,176 +1006,107 @@
     const sort = $('sort').value;
 
     if (sort === 'name') {
-      list.sort((a,b) =>
-        get(a,'Наименование').localeCompare(get(b,'Наименование'),'ru')
+      list.sort((a, b) =>
+        get(a, 'Наименование')
+          .localeCompare(get(b, 'Наименование'), 'ru')
       );
     }
 
     if (sort === 'price') {
-      list.sort((a,b) => {
+      list.sort((a, b) => {
         const n = x =>
           Number(
-            get(x,'Цена')
-              .replace(/\s/g,'')
-              .replace(',','.')
-              .replace(/[^\d.-]/g,'')
+            get(x, 'Цена')
+              .replace(/\s/g, '')
+              .replace(',', '.')
+              .replace(/[^\d.-]/g, '')
           ) || Infinity;
 
-        return n(a)-n(b);
+        return n(a) - n(b);
       });
     }
 
     visibleProducts = list;
 
     $('products').innerHTML = list.length
-      ? list.map((p,i) => cardHTML(p,i)).join('')
+      ? list.map((p, i) => cardHTML(p, i)).join('')
       : '<div class="empty">По выбранным условиям товары не найдены.</div>';
-
-    if ($('viewer').classList.contains('open') &&
-        viewerIndex >= visibleProducts.length) {
-      closeViewer();
-    }
   }
 
-  function viewerDetailsHTML(p) {
-    const name = get(p,'Наименование','Название','name') || 'Без названия';
-    const brand = get(p,'Бренд','brand');
-    const category = get(p,'Категория','category');
-    const packaging = get(p,'Фасовка','Упаковка','packaging');
-    const barcode = get(p,'Штрихкод','barcode');
-    const quantity = get(p,'В коробе','Количество в коробе','quantity per box');
-    const desc = get(p,'Описание','description');
-    const price = get(p,'Цена','price');
-    const oldPrice = get(p,'Старая цена','Цена старая','old price');
-    const boxPrice = get(p,'Цена за коробку','Цена коробки','box price');
-    const kgPrice = get(p,'Цена за кг','Цена за килограмм','kg price');
 
-    return `
-      <div class="viewer-info">
-        ${category ? `<div class="category">${escapeHTML(category)}</div>` : ''}
-        <div class="viewer-name">${escapeHTML(name)}</div>
-        ${brand ? `<div class="viewer-brand">${escapeHTML(brand)}</div>` : ''}
-        ${isNew(p) ? '<span class="badge">НОВИНКА</span>' : ''}
-        ${packaging ? `<div class="viewer-meta">Фасовка: ${escapeHTML(packaging)}</div>` : ''}
-        ${barcode ? `<div class="viewer-meta">Штрихкод: ${escapeHTML(barcode)}</div>` : ''}
-        ${quantity ? `<div class="viewer-meta">В коробе: ${escapeHTML(quantity)} шт.</div>` : ''}
-        ${desc ? `<div class="viewer-desc">${escapeHTML(desc)}</div>` : ''}
-      </div>
+  function viewerHTML(p) {
+    const name = get(p, 'Наименование', 'Название', 'name') || 'Без названия';
+    const img = imageURL(get(p, 'Фото', 'Изображение', 'photo', 'image'));
+    const brand = get(p, 'Бренд', 'brand');
+    const category = get(p, 'Категория', 'category');
+    const packaging = get(p, 'Фасовка', 'Упаковка', 'packaging');
+    const barcode = get(p, 'Штрихкод', 'barcode');
+    const quantity = get(p, 'В коробе', 'Количество в коробе', 'quantity per box');
+    const price = get(p, 'Цена', 'price');
+    const oldPrice = get(p, 'Старая цена', 'Цена старая', 'old price');
+    const boxPrice = get(p, 'Цена за коробку', 'Цена коробки', 'box price');
+    const kgPrice = get(p, 'Цена за кг', 'Цена за килограмм', 'kg price');
+    const desc = get(p, 'Описание', 'description');
 
-      <div class="viewer-pricebar">
-        <div class="viewer-price">
-          ${oldPrice ? `<span class="price-old">${escapeHTML(money(oldPrice))}</span>` : ''}
-          ${price ? `<span class="price-main">${escapeHTML(money(price))}</span>` : ''}
-          ${boxPrice ? `<span class="price-extra">Короб: ${escapeHTML(money(boxPrice))}</span>` : ''}
-          ${kgPrice ? `<span class="price-extra">За кг: ${escapeHTML(money(kgPrice))}</span>` : ''}
-        </div>
-      </div>
-    `;
-  }
+    $('viewerPhoto').src = img || '';
+    $('viewerPhoto').alt = name;
+    $('viewerPhoto').style.display = img ? 'block' : 'none';
 
-  function showViewerProduct() {
-    const p = visibleProducts[viewerIndex];
-    if (!p) return;
+    const rows = [
+      category && `Категория: ${category}`,
+      brand && `Бренд: ${brand}`,
+      packaging && `Фасовка: ${packaging}`,
+      barcode && `Штрихкод: ${barcode}`,
+      quantity && `В коробе: ${quantity} шт.`,
+      desc && `Описание: ${desc}`,
+      oldPrice && `Старая цена: ${money(oldPrice)}`,
+      boxPrice && `Цена за коробку: ${money(boxPrice)}`,
+      kgPrice && `Цена за кг: ${money(kgPrice)}`
+    ].filter(Boolean);
 
-    const img = imageURL(get(p,'Фото','Изображение','photo','image'));
-
-    $('viewerImageHost').innerHTML = img
-      ? `<img class="viewer-image"
-          src="${escapeHTML(img)}"
-          alt="${escapeHTML(get(p,'Наименование','Название','name'))}"
-          onerror="this.remove();document.getElementById('viewerImageHost').textContent='Фото пока не добавлено'">`
-      : 'Фото пока не добавлено';
-
-    $('viewerDetails').innerHTML = viewerDetailsHTML(p);
-    $('viewerDetails').scrollTop = 0;
-
-    $('viewerCounter').textContent =
-      `${viewerIndex+1} из ${visibleProducts.length}`;
-
-    $('viewerPrev').disabled = viewerIndex === 0;
-    $('viewerNext').disabled = viewerIndex === visibleProducts.length-1;
+    $('viewerDetails').innerHTML =
+      `<div class="viewer-name">${escapeHTML(name)}</div>` +
+      rows.map(row => `<div class="viewer-meta">${escapeHTML(row)}</div>`).join('') +
+      (price ? `<div class="viewer-price">${escapeHTML(money(price))}</div>` : '');
+    $('viewerCounter').textContent = `${viewerIndex + 1} / ${visibleProducts.length}`;
+    $('viewerPrev').style.display = visibleProducts.length > 1 ? '' : 'none';
+    $('viewerNext').style.display = visibleProducts.length > 1 ? '' : 'none';
   }
 
   function openViewer(index) {
-    if (index < 0 || index >= visibleProducts.length) return;
-
-    viewerIndex = index;
-    showViewerProduct();
-
+    if (!visibleProducts.length) return;
+    viewerIndex = Math.max(0, Math.min(index, visibleProducts.length - 1));
+    viewerHTML(visibleProducts[viewerIndex]);
     $('viewer').classList.add('open');
-    $('viewer').setAttribute('aria-hidden','false');
-
+    $('viewer').setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
 
   function closeViewer() {
     $('viewer').classList.remove('open');
-    $('viewer').setAttribute('aria-hidden','true');
-
+    $('viewer').setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    viewerIndex = -1;
   }
 
   function moveViewer(step) {
-    const next = viewerIndex + step;
-
-    if (next >= 0 && next < visibleProducts.length) {
-      viewerIndex = next;
-      showViewerProduct();
-    }
+    if (!visibleProducts.length) return;
+    viewerIndex = (viewerIndex + step + visibleProducts.length) % visibleProducts.length;
+    viewerHTML(visibleProducts[viewerIndex]);
   }
 
-  /* ОТКРЫТИЕ КАРТОЧЕК НА ПЛАНШЕТЕ И КОМПЬЮТЕРЕ */
-
-  $('products').addEventListener('pointerdown', e => {
-    if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
-
-    const card = e.target.closest('.card[data-product-index]');
-    if (!card) return;
-
-    touchStart = {
-      card,
-      x:e.clientX,
-      y:e.clientY
-    };
-  });
-
-  $('products').addEventListener('pointerup', e => {
-    if (!touchStart) return;
-
-    const card = e.target.closest('.card[data-product-index]');
-    const dx = e.clientX - touchStart.x;
-    const dy = e.clientY - touchStart.y;
-
-    if (card === touchStart.card && Math.abs(dx) < 15 && Math.abs(dy) < 15) {
-      lastTouchOpen = Date.now();
-      openViewer(Number(card.dataset.productIndex));
-    }
-
-    touchStart = null;
-  });
-
-  $('products').addEventListener('pointercancel', () => {
-    touchStart = null;
-  });
-
   $('products').addEventListener('click', e => {
-    if (Date.now() - lastTouchOpen < 800) return;
-
-    const card = e.target.closest('.card[data-product-index]');
-    if (card) {
-      openViewer(Number(card.dataset.productIndex));
-    }
+    const card = e.target.closest('[data-product-index]');
+    if (card) openViewer(Number(card.dataset.productIndex));
   });
 
   $('products').addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') &&
-        e.target.matches('.card[data-product-index]')) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-product-index]')) {
       e.preventDefault();
       openViewer(Number(e.target.dataset.productIndex));
     }
   });
 
+  $('viewerPhoto').addEventListener('error', () => { $('viewerPhoto').style.display = 'none'; });
   $('viewerClose').addEventListener('click', closeViewer);
   $('viewerPrev').addEventListener('click', () => moveViewer(-1));
   $('viewerNext').addEventListener('click', () => moveViewer(1));
@@ -1083,39 +1117,20 @@
 
   document.addEventListener('keydown', e => {
     if (!$('viewer').classList.contains('open')) return;
-
     if (e.key === 'Escape') closeViewer();
     if (e.key === 'ArrowLeft') moveViewer(-1);
     if (e.key === 'ArrowRight') moveViewer(1);
   });
 
-  /* СВАЙП МЕЖДУ ТОВАРАМИ */
-
   let swipeStartX = 0;
-  let swipeStartY = 0;
+  $('viewerPhotoArea').addEventListener('touchstart', e => {
+    swipeStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
 
-  $('viewerTop').addEventListener('touchstart', e => {
-    if (e.touches.length === 1) {
-      swipeStartX = e.touches[0].clientX;
-      swipeStartY = e.touches[0].clientY;
-    }
-  }, {passive:true});
-
-  $('viewerTop').addEventListener('touchend', e => {
-    if (!swipeStartX) return;
-
-    const dx = e.changedTouches[0].clientX - swipeStartX;
-    const dy = e.changedTouches[0].clientY - swipeStartY;
-
-    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.2) {
-      moveViewer(dx < 0 ? 1 : -1);
-    }
-
-    swipeStartX = 0;
-    swipeStartY = 0;
-  }, {passive:true});
-
-  /* ПОИСК, СОРТИРОВКА И ТЕРРИТОРИЯ */
+  $('viewerPhotoArea').addEventListener('touchend', e => {
+    const delta = e.changedTouches[0].screenX - swipeStartX;
+    if (Math.abs(delta) > 55) moveViewer(delta < 0 ? 1 : -1);
+  }, { passive: true });
 
   $('search').addEventListener('input', render);
   $('sort').addEventListener('change', render);
@@ -1132,31 +1147,55 @@
     });
   });
 
-  /* РУЧНОЕ И АВТОМАТИЧЕСКОЕ ОБНОВЛЕНИЕ */
+  $('refreshBtn').addEventListener('click', () => {
+    refreshData(true);
+  });
 
-  $('refreshBtn').addEventListener('click', refreshData);
-
-  if ('serviceWorker' in navigator &&
-      location.protocol.startsWith('http')) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  }
-
-  refreshData();
-
+  // Проверка раз в час, пока страница открыта.
   setInterval(() => {
-    if (navigator.onLine) refreshData();
-  }, 60 * 60 * 1000);
+    refreshData();
+  }, HOUR);
 
+  // При возвращении на страницу проверяем,
+  // не прошло ли с последней проверки больше часа.
   document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible' && navigator.onLine) {
+    if (
+      document.visibilityState === 'visible' &&
+      Date.now() - lastCheckAt >= HOUR
+    ) {
       refreshData();
     }
   });
 
-  window.addEventListener('online', refreshData);
+  // Отслеживаем восстановление подключения.
+  window.addEventListener('online', () => {
+    if (Date.now() - lastCheckAt >= HOUR) {
+      refreshData();
+    }
+  });
 
+  if (
+    'serviceWorker' in navigator &&
+    location.protocol.startsWith('http')
+  ) {
+    navigator.serviceWorker
+      .register('./sw.js')
+      .catch(() => {});
+  }
+
+  // Показываем сохранённые данные сразу,
+  // затем пробуем загрузить актуальные.
+  const cached = readCache();
+
+  if (cached) {
+    allProducts = cached.products.filter(isActive);
+    render();
+    showSavedStatus('Сохранённая версия');
+    lastCheckAt = cached.savedAt || 0;
+  }
+
+  refreshData();
 })();
 </script>
-
 </body>
 </html>
