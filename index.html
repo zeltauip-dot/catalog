@@ -567,102 +567,126 @@
       .viewer-arrow { bottom: 24px; }
     }
 
-    /* Фото заполняет всю выделенную область просмотра */
-    .viewer-panel {
-      width: min(100%, 1100px);
-      height: min(94vh, 1000px);
-      max-height: 94vh;
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      overflow: hidden;
-    }
+  /* Адаптивное отображение фотографий */
 
-    .viewer-photo-area {
-      position: relative;
-      width: 100%;
-      min-height: 0;
-      height: 100%;
-      background: #f5f7f5;
-      overflow: hidden;
-    }
+.viewer-panel {
+  width: min(100%, 900px);
+  height: min(94vh, 1000px);
+  max-height: 94vh;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
+}
 
-    .viewer-photo {
-      display: block;
-      width: 100%;
-      height: 100%;
-      max-height: none;
-      object-fit: cover;
-      object-position: center;
-    }
+.viewer-photo-area {
+  position: relative;
+  width: min(100%, 60vh);
+  aspect-ratio: 4 / 5;
+  height: auto;
+  max-height: 64vh;
+  min-height: 0;
+  justify-self: center;
+  align-self: center;
+  background: #f5f7f5;
+  overflow: hidden;
+}
 
-    .viewer-details {
-      min-height: 0;
-      max-height: 35vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      flex: initial;
-    }
+.viewer-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 
-    /* Для товара без фото оставляем компактную заглушку */
-    .viewer-panel.no-photo {
-      height: auto;
-      max-height: 94vh;
-      grid-template-rows: 230px auto;
-    }
+.viewer-details {
+  min-height: 0;
+  max-height: 30vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: initial;
+}
 
-    .viewer-photo-area.no-photo {
-      min-height: 0;
-      height: 230px;
-      background: #f5f7f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* Если фотографии нет */
 
-    .viewer-photo-area.no-photo::after {
-      content: "Фото пока не добавлено";
-      color: #87948d;
-      font-size: 16px;
-      text-align: center;
-      padding: 20px;
-    }
+.viewer-panel.no-photo {
+  height: auto;
+  max-height: 94vh;
+  grid-template-rows: 230px auto;
+}
 
-    @media (max-width: 600px) {
-      .viewer-panel {
-        width: 100%;
-        height: 100%;
-        max-height: 100%;
-        border-radius: 0;
-        grid-template-rows: minmax(0, 1fr) auto;
-      }
+.viewer-photo-area.no-photo {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: auto;
+  height: 230px;
+  max-height: none;
+  background: #f5f7f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-      .viewer-photo-area {
-        min-height: 0;
-      }
+.viewer-photo-area.no-photo::after {
+  content: "Фото пока не добавлено";
+  color: #87948d;
+  font-size: 16px;
+  text-align: center;
+  padding: 20px;
+}
 
-      .viewer-details {
-        max-height: 34vh;
-        overflow-y: auto;
-        padding: 14px 16px 18px;
-      }
+/* Телефоны */
 
-      .viewer-panel.no-photo {
-        height: auto;
-        max-height: 100%;
-        grid-template-rows: 180px auto;
-      }
+@media (max-width: 600px) {
+  .viewer {
+    padding: 0;
+  }
 
-      .viewer-photo-area.no-photo {
-        height: 180px;
-      }
-    }
+  .viewer-panel {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
 
-    @media (min-width: 601px) and (orientation: portrait) {
-      .viewer-details {
-        max-height: 34vh;
-        overflow-y: auto;
-      }
-    }
+  .viewer-photo-area {
+    width: min(100%, 60vh);
+    max-height: 58vh;
+  }
+
+  .viewer-details {
+    max-height: 34vh;
+    overflow-y: auto;
+    padding: 14px 16px 18px;
+  }
+
+  .viewer-panel.no-photo {
+    height: auto;
+    max-height: 100%;
+    grid-template-rows: 180px auto;
+  }
+
+  .viewer-photo-area.no-photo {
+    width: 100%;
+    height: 180px;
+    max-height: none;
+  }
+}
+
+/* Планшеты в вертикальной ориентации */
+
+@media (min-width: 601px) and (orientation: portrait) {
+  .viewer-photo-area {
+    width: min(100%, 60vh);
+    max-height: 62vh;
+  }
+
+  .viewer-details {
+    max-height: 30vh;
+    overflow-y: auto;
+  }
+}
 
   </style>
 </head>
