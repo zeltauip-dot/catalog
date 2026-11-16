@@ -261,13 +261,30 @@
 
     .badge {
       display: inline-block;
-      background: #e6f2eb;
-      color: var(--green);
-      border-radius: 5px;
-      padding: 4px 7px;
-      font-size: 11px;
-      font-weight: 800;
+      background: #ffe36a;
+      color: #713400;
+      border: 2px solid #e7a900;
+      border-radius: 8px;
+      padding: 6px 11px;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .6px;
       align-self: flex-start;
+      box-shadow: 0 2px 5px #0002;
+    }
+
+    .viewer-badge {
+      display: inline-block;
+      margin: 0 0 9px;
+      background: #ffe36a;
+      color: #713400;
+      border: 2px solid #e7a900;
+      border-radius: 9px;
+      padding: 7px 13px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: .7px;
+      box-shadow: 0 2px 6px #0002;
     }
 
     .empty, .loading, .error {
@@ -560,7 +577,7 @@
 
     @media (min-width: 600px) and (orientation: portrait) {
       .viewer-panel { grid-template-rows: minmax(0, 1fr) auto; }
-      .viewer-details { max-height: none; overflow: visible; padding: 22px 28px 26px; }
+      .viewer-details { max-height: none; overflow: visible; padding: 17px 28px 20px; }
       .viewer-name { font-size: 29px; }
       .viewer-meta { font-size: 18px; }
       .viewer-price { font-size: 31px; }
@@ -960,7 +977,6 @@
       get(p, 'Наименование', 'Название', 'name') || 'Без названия';
 
     const brand = get(p, 'Бренд', 'brand');
-    const category = get(p, 'Категория', 'category');
     const packaging = get(p, 'Фасовка', 'Упаковка', 'packaging');
     const barcode = get(p, 'Штрихкод', 'barcode');
     const quantity = get(p, 'В коробе', 'Количество в коробе', 'quantity per box');
@@ -979,7 +995,6 @@
       <article class="card" data-product-index="${index}" role="button" tabindex="0" aria-label="Открыть товар крупно">
         <div class="photo-wrap">${photoHTML}</div>
         <div class="details">
-          ${category ? `<div class="category">${escapeHTML(category)}</div>` : ''}
           <div class="name">${escapeHTML(name)}</div>
           ${brand ? `<div class="brandline">${escapeHTML(brand)}</div>` : ''}
           ${isNew(p) ? '<span class="badge">НОВИНКА</span>' : ''}
@@ -1063,7 +1078,6 @@
     const name = get(p, 'Наименование', 'Название', 'name') || 'Без названия';
     const img = imageURL(get(p, 'Фото', 'Изображение', 'photo', 'image'));
     const brand = get(p, 'Бренд', 'brand');
-    const category = get(p, 'Категория', 'category');
     const packaging = get(p, 'Фасовка', 'Упаковка', 'packaging');
     const barcode = get(p, 'Штрихкод', 'barcode');
     const quantity = get(p, 'В коробе', 'Количество в коробе', 'quantity per box');
@@ -1078,7 +1092,6 @@
     $('viewerPhoto').style.display = img ? 'block' : 'none';
 
     const rows = [
-      category && `Категория: ${category}`,
       brand && `Бренд: ${brand}`,
       packaging && `Фасовка: ${packaging}`,
       barcode && `Штрихкод: ${barcode}`,
@@ -1089,8 +1102,13 @@
       kgPrice && `Цена за кг: ${money(kgPrice)}`
     ].filter(Boolean);
 
+    const newBadge = isNew(p)
+      ? '<div class="viewer-badge">★ НОВИНКА</div>'
+      : '';
+
     $('viewerDetails').innerHTML =
       `<div class="viewer-name">${escapeHTML(name)}</div>` +
+      newBadge +
       rows.map(row => `<div class="viewer-meta">${escapeHTML(row)}</div>`).join('') +
       (price ? `<div class="viewer-price">${escapeHTML(money(price))}</div>` : '');
     $('viewerCounter').textContent = `${viewerIndex + 1} / ${visibleProducts.length}`;
