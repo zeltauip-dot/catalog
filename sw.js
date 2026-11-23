@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zheltau-shell-v4';
+const CACHE_NAME = 'zheltau-shell-v5';
 const IMAGE_CACHE_NAME = 'zheltau-images-v2';
 
 const APP_FILES = [
@@ -59,7 +59,9 @@ self.addEventListener('fetch', event => {
         if (cached) return cached;
 
         try {
-          const response = await fetch(req);
+          const response = await fetch(
+  new Request(req, { cache: 'no-store' })
+);
 
           if (response.ok || response.type === 'opaque') {
             try {
