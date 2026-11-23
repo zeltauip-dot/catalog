@@ -320,12 +320,12 @@
         grid-template-columns: 1fr;
       }
 
-      .card {
-        grid-template-columns: minmax(135px, 42%) 1fr;
-        gap: 12px;
+       .card {
+        grid-template-columns: minmax(0, 55%) minmax(0, 1fr);
+        gap: 10px;
         padding: 10px;
+        align-items: start;
       }
-
     
       .name {
         font-size: 15px;
@@ -414,11 +414,12 @@
     /* Очень узкие экраны */
 @media (max-width: 380px) {
   .card {
-    grid-template-columns: minmax(120px, 42%) 1fr;
+    grid-template-columns: minmax(0, 55%) minmax(0, 1fr);
   }
 
   .photo-wrap {
     aspect-ratio: 855 / 932;
+    width: 100%;
     height: auto;
   }
 
@@ -528,12 +529,13 @@
       font-size: 14px;
     }
 
-    .viewer-details {
-      max-height: none;
-      overflow: visible;
-      padding: 18px 22px 22px;
-      overscroll-behavior: auto;
-    }
+.viewer-details {
+  max-height: 35vh;
+  overflow-y: auto;
+  padding: 18px 22px 22px;
+  overscroll-behavior: contain;
+  min-height: 0;
+}
 
     .viewer-name {
       font-size: 23px;
@@ -570,7 +572,12 @@
         grid-template-rows: minmax(0, 1fr) auto;
       }
       .viewer-photo-area { min-height: 0; }
-      .viewer-details { max-height: none; overflow: visible; padding: 14px 16px 18px; }
+      .viewer-details {
+  max-height: 38vh;
+  overflow-y: auto;
+  padding: 14px 16px 18px;
+  min-height: 0;
+}
       .viewer-name { font-size: 19px; }
       .viewer-price { font-size: 22px; }
       .viewer-arrow, .viewer-close { width: 40px; height: 40px; }
@@ -579,7 +586,12 @@
 
     @media (min-width: 600px) and (orientation: portrait) {
       .viewer-panel { grid-template-rows: minmax(0, 1fr) auto; }
-      .viewer-details { max-height: none; overflow: visible; padding: 17px 28px 20px; }
+      .viewer-details {
+  max-height: 35vh;
+  overflow-y: auto;
+  padding: 17px 28px 20px;
+  min-height: 0;
+}
       .viewer-name { font-size: 29px; }
       .viewer-meta { font-size: 18px; }
       .viewer-price { font-size: 31px; }
